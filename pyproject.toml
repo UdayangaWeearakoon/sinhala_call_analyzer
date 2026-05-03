@@ -1,0 +1,37 @@
+[project]
+name = "sinhala-call-analytics"
+version = "0.1.0"
+description = "Local Sinhala call transcript categorization and sentiment analysis using a Hybrid BERT-Random Forest approach."
+authors = [
+    { name = "Udayanga Weerakoon", email = "udayangaweerakoon212@gmail.com" },
+    { name = "Bashini Rashmika Vindyani ", email = "bashinirashmika2001@gmail.com" },
+    { name = "Isuru Nadee Karunarathna", email = "isurunadeekarunarathna@gmail.com" },
+    { name = "Isuru Alahakoon ", email = "ialahakoo@gmail.com" }
+]
+dependencies = [
+    "pandas>=2.2.0",
+    "scikit-learn>=1.4.0",
+    "transformers>=4.38.0",
+    "torch>=2.2.0",
+    "sinling>=0.3.5",
+    "google-generativeai>=0.4.0",
+    "tqdm>=4.66.0",
+    "joblib>=1.3.0",
+    "xgboost>=2.0.0",
+    "matplotlib>=3.7.0",
+    "fastapi>=0.136.1",
+    "uvicorn>=0.46.0",
+    "sqlalchemy>=2.0.49",
+    "pydantic>=2.13.1",
+    "alembic>=1.18.4",
+    "python-multipart>=0.0.27",
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
