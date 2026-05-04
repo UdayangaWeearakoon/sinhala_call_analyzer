@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 from fastapi import FastAPI, Depends, Query, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from src.database import get_db, init_db
 from src.database.repository import (
@@ -14,6 +15,8 @@ from src.database.repository import (
     get_agent_performance,
     get_category_trend,
     get_top_categories,
+    update_daily_aggregate,
+    refresh_all_daily_aggregates,
 )
 from src.database.schemas import (
     CallCreate,
@@ -31,6 +34,14 @@ app = FastAPI(
     title="Sinhala Call Analytics API",
     description="API for analyzing Sinhala customer call transcripts",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 predictor = None
@@ -58,6 +69,7 @@ def ingest_call(call: CallCreate, db: Session = Depends(get_db)):
         call.sentiment_confidence = result["sentiment_confidence"]
 
     db_call = create_call(db, call.model_dump())
+    update_daily_aggregate(db, db_call.timestamp)
     return db_call
 
 
@@ -125,3 +137,9 @@ def create_new_agent(agent: AgentCreate, db: Session = Depends(get_db)):
 @app.get("/api/agents", response_model=list[AgentResponse])
 def list_agents(db: Session = Depends(get_db)):
     return get_agents(db)
+
+
+@app.post("/api/analytics/refresh-daily")
+def refresh_daily(db: Session = Depends(get_db)):
+    count = refresh_all_daily_aggregates(db)
+    return {"message": f"Refreshed {count} daily aggregate records"}

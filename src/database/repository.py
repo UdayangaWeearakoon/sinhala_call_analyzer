@@ -195,3 +195,69 @@ def get_top_categories(db: Session, limit: int = 10) -> list[dict]:
         .all()
     )
     return [{"category": r.category, "count": r.count} for r in rows]
+
+
+def update_daily_aggregate(db: Session, day: datetime) -> DailyAggregate:
+    day_date = day.replace(hour=0, minute=0, second=0, microsecond=0)
+    next_day = day_date + timedelta(days=1)
+
+    total = db.query(Call).filter(Call.timestamp >= day_date, Call.timestamp < next_day).count()
+    resolved = db.query(Call).filter(
+        Call.timestamp >= day_date, Call.timestamp < next_day, Call.resolved == True
+    ).count()
+    positive = db.query(Call).filter(
+        Call.timestamp >= day_date, Call.timestamp < next_day, Call.sentiment == "Positive"
+    ).count()
+    negative = db.query(Call).filter(
+        Call.timestamp >= day_date, Call.timestamp < next_day, Call.sentiment == "Negative"
+    ).count()
+    neutral = db.query(Call).filter(
+        Call.timestamp >= day_date, Call.timestamp < next_day, Call.sentiment == "Neutral"
+    ).count()
+
+    category_counts = (
+        db.query(Call.category, func.count(Call.id))
+        .filter(Call.timestamp >= day_date, Call.timestamp < next_day)
+        .group_by(Call.category)
+        .all()
+    )
+    top_category = max(category_counts, key=lambda x: x[1])[0] if category_counts else None
+
+    existing = db.query(DailyAggregate).filter(DailyAggregate.date == day_date).first()
+    if existing:
+        existing.total_calls = total
+        existing.resolved_count = resolved
+        existing.positive_count = positive
+        existing.negative_count = negative
+        existing.neutral_count = neutral
+        existing.top_category = top_category
+    else:
+        existing = DailyAggregate(
+            date=day_date,
+            total_calls=total,
+            resolved_count=resolved,
+            positive_count=positive,
+            negative_count=negative,
+            neutral_count=neutral,
+            top_category=top_category,
+        )
+        db.add(existing)
+    db.commit()
+    db.refresh(existing)
+    return existing
+
+
+def refresh_all_daily_aggregates(db: Session) -> int:
+    dates = (
+        db.query(func.date(Call.timestamp).label("day"))
+        .distinct()
+        .all()
+    )
+    count = 0
+    for (day_str,) in dates:
+        day = datetime.strptime(day_str, "%Y-%m-%d").replace(
+            tzinfo=timezone.utc
+        )
+        update_daily_aggregate(db, day)
+        count += 1
+    return count
