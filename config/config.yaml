@@ -7,3 +7,10 @@ paths:
   output_dir : data/processed
   models_dir: data/models
   output_file: data/processed/combined.json
+
+# ============================================================================
+# MongoDB Atlas
+# ============================================================================
+mongodb:
+  uri: "${MONGODB_URI}"
+  database: "sinhala_call_analytics"

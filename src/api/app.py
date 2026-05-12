@@ -1,18 +1,14 @@
 from datetime import datetime
 from typing import Optional
-from fastapi import FastAPI, Depends, Query, HTTPException
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
-from src.database import get_db, init_db
+from src.database import init_db, close_db
 from src.database.repository import (
     create_call,
     get_calls,
     get_call_by_id,
-    get_agents,
-    get_agent_by_name,
-    create_agent,
     get_overview_stats,
-    get_agent_performance,
     get_category_trend,
     get_top_categories,
     update_daily_aggregate,
@@ -22,18 +18,29 @@ from src.database.schemas import (
     CallCreate,
     CallResponse,
     CallListResponse,
-    AgentCreate,
-    AgentResponse,
     OverviewResponse,
-    AgentPerformanceResponse,
     CategoryTrendResponse,
 )
 from src.inference import CallAnalyticsPredictor
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    try:
+        app.state.predictor = CallAnalyticsPredictor()
+    except Exception:
+        print("Warning: ML models not loaded. Inference will be unavailable.")
+        app.state.predictor = None
+    yield
+    await close_db()
+
 
 app = FastAPI(
     title="Sinhala Call Analytics API",
     description="API for analyzing Sinhala customer call transcripts",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -44,54 +51,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-predictor = None
-
-
-@app.on_event("startup")
-def startup():
-    init_db()
-    global predictor
-    try:
-        predictor = CallAnalyticsPredictor()
-    except Exception:
-        print("Warning: ML models not loaded. Inference will be unavailable.")
-
 
 @app.post("/api/calls", response_model=CallResponse)
-def ingest_call(call: CallCreate, db: Session = Depends(get_db)):
-    if not call.category or not call.sentiment:
+async def ingest_call(call: CallCreate):
+    call_dict = call.model_dump()
+    if not call_dict.get("category") or not call_dict.get("sentiment"):
+        predictor = app.state.predictor
         if predictor is None:
             raise HTTPException(status_code=503, detail="ML models not loaded")
-        result = predictor.predict(call.transcript)
-        call.category = result["category"]
-        call.sentiment = result["sentiment"]
-        call.category_confidence = result["category_confidence"]
-        call.sentiment_confidence = result["sentiment_confidence"]
+        try:
+            result = predictor.predict(call_dict["transcript"])
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
+        call_dict["category"] = result["category"]
+        call_dict["sentiment"] = result["sentiment"]
+        call_dict["category_confidence"] = result["category_confidence"]
+        call_dict["sentiment_confidence"] = result["sentiment_confidence"]
 
-    db_call = create_call(db, call.model_dump())
-    update_daily_aggregate(db, db_call.timestamp)
+    db_call = await create_call(call_dict)
+    await update_daily_aggregate(db_call.timestamp)
     return db_call
 
 
 @app.get("/api/calls", response_model=CallListResponse)
-def list_calls(
+async def list_calls(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     date_from: Optional[datetime] = None,
     date_to: Optional[datetime] = None,
-    agent_id: Optional[int] = None,
     category: Optional[str] = None,
     sentiment: Optional[str] = None,
-    db: Session = Depends(get_db),
 ):
     skip = (page - 1) * page_size
-    calls, total = get_calls(
-        db,
+    calls, total = await get_calls(
         skip=skip,
         limit=page_size,
         date_from=date_from,
         date_to=date_to,
-        agent_id=agent_id,
         category=category,
         sentiment=sentiment,
     )
@@ -99,47 +95,29 @@ def list_calls(
 
 
 @app.get("/api/calls/{call_id}", response_model=CallResponse)
-def get_call(call_id: int, db: Session = Depends(get_db)):
-    call = get_call_by_id(db, call_id)
+async def get_call(call_id: str):
+    call = await get_call_by_id(call_id)
     if not call:
         raise HTTPException(status_code=404, detail="Call not found")
     return call
 
 
 @app.get("/api/analytics/overview", response_model=OverviewResponse)
-def overview(db: Session = Depends(get_db)):
-    return get_overview_stats(db)
-
-
-@app.get("/api/analytics/agent-performance")
-def agent_performance(db: Session = Depends(get_db)):
-    return get_agent_performance(db)
+async def overview():
+    return await get_overview_stats()
 
 
 @app.get("/api/analytics/category-trend")
-def category_trend(days: int = Query(365, ge=1, le=3650), db: Session = Depends(get_db)):
-    return get_category_trend(db, days=days)
+async def category_trend(days: int = Query(365, ge=1, le=3650)):
+    return await get_category_trend(days=days)
 
 
 @app.get("/api/analytics/top-categories")
-def top_categories(limit: int = Query(10, ge=1, le=50), db: Session = Depends(get_db)):
-    return get_top_categories(db, limit=limit)
-
-
-@app.post("/api/agents", response_model=AgentResponse)
-def create_new_agent(agent: AgentCreate, db: Session = Depends(get_db)):
-    existing = get_agent_by_name(db, agent.name)
-    if existing:
-        raise HTTPException(status_code=400, detail="Agent already exists")
-    return create_agent(db, agent.name, agent.team)
-
-
-@app.get("/api/agents", response_model=list[AgentResponse])
-def list_agents(db: Session = Depends(get_db)):
-    return get_agents(db)
+async def top_categories(limit: int = Query(10, ge=1, le=50)):
+    return await get_top_categories(limit=limit)
 
 
 @app.post("/api/analytics/refresh-daily")
-def refresh_daily(db: Session = Depends(get_db)):
-    count = refresh_all_daily_aggregates(db)
+async def refresh_daily():
+    count = await refresh_all_daily_aggregates()
     return {"message": f"Refreshed {count} daily aggregate records"}

@@ -1,31 +1,30 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from pathlib import Path
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+from beanie import init_beanie
+from src.database.models import Call, DailyAggregate
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DB_DIR = os.path.join(PROJECT_ROOT, "data")
-DB_PATH = os.path.join(DB_DIR, "analytics.db")
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
+load_dotenv()
 
-os.makedirs(DB_DIR, exist_ok=True)
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
+DB_NAME = os.getenv("DB_NAME", "sinhala_call_analytics")
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+client: AsyncIOMotorClient = None
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def init_db():
+    global client
+    client = AsyncIOMotorClient(MONGODB_URI)
+    await init_beanie(
+        database=client[DB_NAME],
+        document_models=[Call, DailyAggregate],
+    )
+    print(f"Database initialized: {DB_NAME}")
 
 
-def init_db():
-    from src.database.models import Base
-    Base.metadata.create_all(bind=engine)
-    print(f"Database initialized at: {DB_PATH}")
+async def close_db():
+    global client
+    if client:
+        client.close()
+        print("Database connection closed.")

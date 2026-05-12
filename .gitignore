@@ -30,6 +30,11 @@ data/results/
 # Raw data (sensitive, combined.json is sufficient)
 data/raw/
 
+# Environment variables
+.env
+.env.local
+.env.*
+
 # Logs
 *.log
 server.log
