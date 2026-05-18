@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { OverviewStats, CallListResponse, CategoryCount, CallResponse, CallIngestRequest } from '../types'
+import type { OverviewStats, CallListResponse, CategoryCount, CallResponse, CallIngestRequest, CallFilters } from '../types'
 
 const api = axios.create({
   baseURL: '/api',
@@ -10,8 +10,15 @@ export const fetchOverview = async (): Promise<OverviewStats> => {
   return data
 }
 
-export const fetchCalls = async (page = 1, page_size = 10): Promise<CallListResponse> => {
-  const { data } = await api.get<CallListResponse>('/calls', { params: { page, page_size } })
+export const fetchCalls = async (filters: CallFilters = {}): Promise<CallListResponse> => {
+  const params: Record<string, string | number> = {}
+  if (filters.page) params.page = filters.page
+  if (filters.page_size) params.page_size = filters.page_size
+  if (filters.date_from) params.date_from = filters.date_from
+  if (filters.date_to) params.date_to = filters.date_to
+  if (filters.category) params.category = filters.category
+  if (filters.sentiment) params.sentiment = filters.sentiment
+  const { data } = await api.get<CallListResponse>('/calls', { params })
   return data
 }
 
@@ -22,5 +29,10 @@ export const ingestCall = async (payload: CallIngestRequest): Promise<CallRespon
 
 export const fetchTopCategories = async (limit = 10): Promise<CategoryCount[]> => {
   const { data } = await api.get<CategoryCount[]>('/analytics/top-categories', { params: { limit } })
+  return data
+}
+
+export const fetchCallById = async (id: string): Promise<CallResponse> => {
+  const { data } = await api.get<CallResponse>(`/calls/${id}`)
   return data
 }

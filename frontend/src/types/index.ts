@@ -65,3 +65,12 @@ export interface CategoryCount {
   category: string
   count: number
 }
+
+export interface CallFilters {
+  page?: number
+  page_size?: number
+  date_from?: string
+  date_to?: string
+  category?: string
+  sentiment?: string
+}

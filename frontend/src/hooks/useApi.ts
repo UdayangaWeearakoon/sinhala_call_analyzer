@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { fetchOverview, fetchCalls, fetchTopCategories } from '../api'
+import type { CallFilters } from '../types'
 
 export function useOverview() {
   return useQuery({
@@ -10,10 +11,10 @@ export function useOverview() {
   })
 }
 
-export function useCalls(page = 1, page_size = 10) {
+export function useCalls(filters: CallFilters = {}) {
   return useQuery({
-    queryKey: ['calls', page, page_size],
-    queryFn: () => fetchCalls(page, page_size),
+    queryKey: ['calls', filters],
+    queryFn: () => fetchCalls(filters),
     staleTime: 30_000,
   })
 }
