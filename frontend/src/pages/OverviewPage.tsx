@@ -69,8 +69,10 @@ export function OverviewPage() {
 
       <KpiCards
         totalCallsToday={overview.total_calls_today}
+        totalCallsYesterday={overview.total_calls_yesterday}
         totalCallsThisMonth={overview.total_calls_this_month}
         positivePercentage={overview.positive_percentage}
+        resolutionRate={overview.resolution_rate}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
