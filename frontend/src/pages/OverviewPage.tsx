@@ -10,7 +10,7 @@ import { Loader2, AlertCircle } from 'lucide-react'
 
 export function OverviewPage() {
   const { data: overview, isPending: loadingOverview, error: overviewError } = useOverview()
-  const { data: callsData, isPending: loadingCalls, error: callsError } = useCalls(1, 10)
+  const { data: callsData, isPending: loadingCalls, error: callsError } = useCalls({ page: 1, page_size: 5 })
   const { data: topCategories, isPending: loadingCategories } = useTopCategories(10)
 
   const [mounted, setMounted] = useState(false)

@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { useNavigate } from 'react-router-dom'
 import type { Call } from '../types'
 
 interface RecentCallsProps {
@@ -33,6 +34,8 @@ function ConfidenceBar({ value }: { value: number }) {
 }
 
 export function RecentCalls({ calls }: RecentCallsProps) {
+  const navigate = useNavigate()
+
   if (!calls || calls.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -59,7 +62,7 @@ export function RecentCalls({ calls }: RecentCallsProps) {
           </thead>
           <tbody>
             {calls.map((call) => (
-              <tr key={call.id} className="border-b border-gray-100 hover:bg-gray-50">
+              <tr key={call.id} className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/calls/${call.id}`)}>
                 <td className="py-3 px-4 max-w-xs truncate text-gray-700">
                   {call.transcript.substring(0, 60)}
                   {call.transcript.length > 60 ? '...' : ''}
