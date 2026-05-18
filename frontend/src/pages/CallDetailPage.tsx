@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCallById } from '../api'
 import { format } from 'date-fns'
-import { ArrowLeft, Phone, Clock, CheckCircle, XCircle, User, FileText } from 'lucide-react'
+import { ArrowLeft, Phone, Clock, CheckCircle, XCircle, User, FileText, AlertTriangle } from 'lucide-react'
 
 const sentimentColors: Record<string, string> = {
   Positive: 'bg-green-100 text-green-800',
@@ -88,6 +88,21 @@ export function CallDetailPage() {
         </div>
 
         <div className="p-6 space-y-6">
+          {(call.category_confidence < 0.7 || call.sentiment_confidence < 0.7) && (
+            <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-amber-800">Low Confidence Prediction</p>
+                <p className="text-sm text-amber-700 mt-0.5">
+                  The AI model has low certainty for this call.
+                  {call.category_confidence < 0.7 ? ` Category confidence: ${(call.category_confidence * 100).toFixed(1)}%.` : ''}
+                  {call.sentiment_confidence < 0.7 ? ` Sentiment confidence: ${(call.sentiment_confidence * 100).toFixed(1)}%.` : ''}
+                  {' '}Consider reviewing manually.
+                </p>
+              </div>
+            </div>
+          )}
+
           <div>
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
               <FileText className="w-4 h-4" /> Transcript

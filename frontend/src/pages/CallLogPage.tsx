@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCalls, useTopCategories } from '../hooks/useApi'
 import { format } from 'date-fns'
-import { Search, ChevronLeft, ChevronRight, RotateCcw, Loader2, AlertCircle } from 'lucide-react'
+import { Search, ChevronLeft, ChevronRight, RotateCcw, Loader2, AlertCircle, AlertTriangle } from 'lucide-react'
 import type { CallFilters } from '../types'
 
 const sentimentOptions = ['', 'Positive', 'Neutral', 'Negative', 'Very Negative']
@@ -181,8 +181,15 @@ export function CallLogPage() {
                       onClick={() => navigate(`/calls/${call.id}`)}
                     >
                       <td className="py-3 px-4 max-w-xs truncate text-gray-700">
-                        {call.transcript.substring(0, 60)}
-                        {call.transcript.length > 60 ? '...' : ''}
+                        <span className="flex items-center gap-1.5">
+                          {call.category_confidence < 0.7 || call.sentiment_confidence < 0.7 ? (
+                            <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="Low confidence prediction" />
+                          ) : null}
+                          <span className="truncate">
+                            {call.transcript.substring(0, 60)}
+                            {call.transcript.length > 60 ? '...' : ''}
+                          </span>
+                        </span>
                       </td>
                       <td className="py-3 px-4 text-gray-700">{call.category}</td>
                       <td className="py-3 px-4">

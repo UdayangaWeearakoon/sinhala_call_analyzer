@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
+import { AlertTriangle } from 'lucide-react'
 import type { Call } from '../types'
 
 interface RecentCallsProps {
@@ -63,9 +64,14 @@ export function RecentCalls({ calls }: RecentCallsProps) {
           <tbody>
             {calls.map((call) => (
               <tr key={call.id} className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/calls/${call.id}`)}>
-                <td className="py-3 px-4 max-w-xs truncate text-gray-700">
-                  {call.transcript.substring(0, 60)}
-                  {call.transcript.length > 60 ? '...' : ''}
+                <td className="py-3 px-4 max-w-xs truncate text-gray-700 flex items-center gap-1.5">
+                  {call.category_confidence < 0.7 || call.sentiment_confidence < 0.7 ? (
+                    <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="Low confidence prediction" />
+                  ) : null}
+                  <span className="truncate">
+                    {call.transcript.substring(0, 60)}
+                    {call.transcript.length > 60 ? '...' : ''}
+                  </span>
                 </td>
                 <td className="py-3 px-4 text-gray-700">{call.category}</td>
                 <td className="py-3 px-4">
