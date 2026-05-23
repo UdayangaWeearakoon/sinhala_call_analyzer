@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ingestCall } from '../api'
 import type { CallResponse } from '../types'
-import { Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp, Upload } from 'lucide-react'
 
 export function IngestCallForm() {
   const queryClient = useQueryClient()
   const [transcript, setTranscript] = useState('')
+  const [fileName, setFileName] = useState<string | null>(null)
+  const [fileError, setFileError] = useState<string | null>(null)
   const [result, setResult] = useState<CallResponse | null>(null)
   const [expanded, setExpanded] = useState(false)
 
@@ -20,31 +22,87 @@ export function IngestCallForm() {
     },
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (!transcript.trim()) return
     mutation.mutate({ transcript: transcript.trim() })
   }
 
+  const processTextFile = (file: File) => {
+    if (!file.type.startsWith('text/') && !file.name.endsWith('.txt')) {
+      setFileError('Only plain text files are supported.')
+      return
+    }
+
+    setFileError(null)
+    setFileName(file.name)
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      setTranscript((reader.result as string) || '')
+    }
+    reader.onerror = () => {
+      setFileError('Unable to read the selected file. Please try another file.')
+    }
+    reader.readAsText(file, 'UTF-8')
+  }
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      processTextFile(file)
+    }
+    e.target.value = ''
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Ingest New Call</h3>
-      <p className="text-sm text-gray-500 mb-4">Paste a Sinhala call transcript below to run ML inference and save to the database.</p>
+      <p className="text-sm text-slate-500 mb-5">
+        Paste a Sinhala call transcript below or upload a transcript file directly.
+      </p>
 
       <form onSubmit={handleSubmit}>
-        <textarea
-          value={transcript}
-          onChange={(e) => setTranscript(e.target.value)}
-          placeholder="Enter Sinhala transcript here..."
-          className="w-full border border-gray-300 rounded-lg p-3 text-sm min-h-32 resize-y focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
-          rows={6}
-        />
+        <div className="relative mb-4">
+          <input
+            id="call-file-upload"
+            type="file"
+            accept=".txt,text/plain"
+            className="sr-only"
+            onChange={handleFileChange}
+          />
 
-        <div className="mt-3 flex gap-3">
+          <textarea
+            value={transcript}
+            onChange={(e) => setTranscript(e.target.value)}
+            placeholder="Enter Sinhala transcript or add transcript file..."
+            className="w-full min-h-[220px] rounded-3xl border border-gray-200 bg-slate-50 px-6 py-5 pr-36 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition duration-150 resize-none"
+          />
+
+          <label
+            htmlFor="call-file-upload"
+            className="absolute left-4 bottom-4 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:shadow-md hover:text-blue-700 cursor-pointer"
+          >
+            <Upload className="h-4 w-4" />
+            Upload
+          </label>
+        </div>
+
+        {fileName && (
+          <div className="mb-4 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+            Loaded file: <span className="font-medium text-slate-900">{fileName}</span>
+          </div>
+        )}
+
+        {fileError && (
+          <div className="mb-4 text-sm text-red-600">{fileError}</div>
+        )}
+
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <button
             type="submit"
             disabled={mutation.isPending || !transcript.trim()}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
           >
             {mutation.isPending ? (
               <span className="flex items-center gap-2">
@@ -58,7 +116,12 @@ export function IngestCallForm() {
 
           <button
             type="button"
-            onClick={() => { setTranscript(''); setResult(null); }}
+            onClick={() => {
+              setTranscript('')
+              setFileName(null)
+              setFileError(null)
+              setResult(null)
+            }}
             className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
           >
             Clear
