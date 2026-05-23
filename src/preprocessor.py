@@ -1,3 +1,15 @@
+import os
+import platform
+
+# Limit native thread pools only on macOS or when explicitly requested.
+# This avoids Apple Silicon / XGBoost / sklearn threading conflicts
+# without changing behavior for other platforms.
+if platform.system() == "Darwin" or os.getenv("SINGLE_THREAD_EMBEDDING", "").lower() in {"1", "true", "yes"}:
+    os.environ["OMP_NUM_THREADS"] = "1"
+    os.environ["MKL_NUM_THREADS"] = "1"
+    os.environ["OPENBLAS_NUM_THREADS"] = "1"
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 import torch
 import re
 from sinling import SinhalaTokenizer

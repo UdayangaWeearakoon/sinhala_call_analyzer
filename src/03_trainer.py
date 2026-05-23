@@ -109,7 +109,7 @@ class ModelTrainer:
                     random_state=42,
                     use_label_encoder=False,
                     eval_metric="mlogloss",
-                    n_jobs=-1
+                    n_jobs=1
                 )
             else:
                 model = RandomForestClassifier(
@@ -118,7 +118,7 @@ class ModelTrainer:
                     min_samples_split=5,
                     min_samples_leaf=2,
                     random_state=42,
-                    n_jobs=-1
+                    n_jobs=1
                 )
             
             print(f"\nRunning {n_splits}-fold cross-validation...")
