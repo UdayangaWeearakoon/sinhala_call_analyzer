@@ -59,8 +59,8 @@ Dashboard opens at `http://localhost:5173`.
 ## How to Use
 
 1. Open the dashboard at `http://localhost:5173`
-2. Paste a Sinhala call transcript into the **Ingest New Call** form
-3. Click **Analyze & Save** — the ML model categorizes it and detects sentiment
+2. Upload a `.txt` Sinhala call transcript in the **Ingest New Call** form
+3. Review the extracted text, then click **Analyze & Save** — the ML model categorizes it and detects sentiment
 4. Results appear instantly in the dashboard KPIs, charts, and recent calls table
 
 ## Project Structure
