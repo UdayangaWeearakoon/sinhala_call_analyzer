@@ -25,7 +25,10 @@ export function IngestCallForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!transcript.trim()) return
-    mutation.mutate({ transcript: transcript.trim() })
+    mutation.mutate({
+      transcript: transcript.trim(),
+      source_file_name: selectedFileName || null,
+    })
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

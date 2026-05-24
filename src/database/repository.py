@@ -22,6 +22,23 @@ async def create_call(call_data: dict) -> Call:
     return call
 
 
+async def find_duplicate_call(
+    transcript_hash: str,
+    transcript: str,
+    source_file_name: Optional[str] = None,
+) -> Optional[Call]:
+    conditions = [
+        {"transcript_hash": transcript_hash},
+        {"transcript": transcript},
+    ]
+
+    if source_file_name:
+        conditions.append({"source_file_name": source_file_name})
+
+    doc = await _calls_col().find_one({"$or": conditions})
+    return Call.model_validate(doc) if doc else None
+
+
 async def get_calls(
     skip: int = 0,
     limit: int = 50,

@@ -10,6 +10,8 @@ def utcnow():
 
 class Call(Document):
     transcript: str
+    source_file_name: Optional[str] = None
+    transcript_hash: Optional[str] = None
     category: str
     sentiment: str
     category_confidence: float
@@ -27,6 +29,8 @@ class Call(Document):
             "timestamp",
             "category",
             "sentiment",
+            "source_file_name",
+            "transcript_hash",
         ]
 
 

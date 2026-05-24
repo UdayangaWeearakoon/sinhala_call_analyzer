@@ -5,6 +5,15 @@ const api = axios.create({
   baseURL: '/api',
 })
 
+const getErrorMessage = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
+    const detail = error.response?.data?.detail
+    if (typeof detail === 'string') return detail
+  }
+
+  return 'Request failed. Please try again.'
+}
+
 export const fetchOverview = async (): Promise<OverviewStats> => {
   const { data } = await api.get<OverviewStats>('/analytics/overview')
   return data
@@ -23,8 +32,12 @@ export const fetchCalls = async (filters: CallFilters = {}): Promise<CallListRes
 }
 
 export const ingestCall = async (payload: CallIngestRequest): Promise<CallResponse> => {
-  const { data } = await api.post<CallResponse>('/calls', payload)
-  return data
+  try {
+    const { data } = await api.post<CallResponse>('/calls', payload)
+    return data
+  } catch (error) {
+    throw new Error(getErrorMessage(error))
+  }
 }
 
 export const fetchTopCategories = async (limit = 10): Promise<CategoryCount[]> => {

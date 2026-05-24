@@ -1,4 +1,5 @@
 from datetime import datetime
+from hashlib import sha256
 from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Query, HTTPException
@@ -6,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.database import init_db, close_db
 from src.database.repository import (
     create_call,
+    find_duplicate_call,
     get_calls,
     get_call_by_id,
     get_overview_stats,
@@ -22,6 +24,11 @@ from src.database.schemas import (
     CategoryTrendResponse,
 )
 from src.inference import CallAnalyticsPredictor
+
+
+def transcript_hash(transcript: str) -> str:
+    normalized = "\n".join(line.strip() for line in transcript.strip().splitlines())
+    return sha256(normalized.encode("utf-8")).hexdigest()
 
 
 @asynccontextmanager
@@ -55,6 +62,21 @@ app.add_middleware(
 @app.post("/api/calls", response_model=CallResponse)
 async def ingest_call(call: CallCreate):
     call_dict = call.model_dump()
+    source_file_name = call_dict.get("source_file_name")
+    call_dict["transcript_hash"] = transcript_hash(call_dict["transcript"])
+
+    duplicate = await find_duplicate_call(
+        transcript_hash=call_dict["transcript_hash"],
+        transcript=call_dict["transcript"],
+        source_file_name=source_file_name,
+    )
+    if duplicate:
+        duplicate_label = duplicate.source_file_name or "this transcript"
+        raise HTTPException(
+            status_code=409,
+            detail=f"{duplicate_label} has already been added.",
+        )
+
     if not call_dict.get("category") or not call_dict.get("sentiment"):
         predictor = app.state.predictor
         if predictor is None:

@@ -1,6 +1,7 @@
 export interface CallResponse {
   id: string
   transcript: string
+  source_file_name: string | null
   category: string
   sentiment: string
   category_confidence: number
@@ -15,6 +16,7 @@ export interface CallResponse {
 
 export interface CallIngestRequest {
   transcript: string
+  source_file_name?: string | null
   call_duration?: number | null
   customer_phone?: string | null
   resolved?: boolean
@@ -24,6 +26,7 @@ export interface CallIngestRequest {
 export interface Call {
   id: string
   transcript: string
+  source_file_name: string | null
   category: string
   sentiment: string
   category_confidence: number
