@@ -4,6 +4,7 @@ import { OverviewPage } from './pages/OverviewPage'
 import { CallDetailPage } from './pages/CallDetailPage'
 import { CallLogPage } from './pages/CallLogPage'
 import { useState } from 'react'
+import logo from './assets/logo.png'
 
 const queryClient = new QueryClient({
   defaultOptions: {

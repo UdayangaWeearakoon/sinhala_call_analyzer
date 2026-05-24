@@ -44,7 +44,7 @@ export function OverviewPage() {
         <p className="text-gray-500 text-sm text-center">
           {overviewError?.message || callsError?.message}
         </p>
-        <p className="text-gray-400 text-xs">Check that backend is running on port 8000</p>
+        <p className="text-gray-400 text-xs">Check that backend is running on port 8002</p>
       </div>
     )
   }

@@ -57,6 +57,11 @@ async def get_call_by_id(call_id: str) -> Optional[Call]:
     return Call.model_validate(doc) if doc else None
 
 
+async def get_call_by_hash(file_hash: str) -> Optional[Call]:
+    doc = await _calls_col().find_one({"file_hash": file_hash})
+    return Call.model_validate(doc) if doc else None
+
+
 async def get_overview_stats() -> dict:
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
