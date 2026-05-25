@@ -5,6 +5,8 @@ from pydantic import BaseModel, field_validator
 
 class CallCreate(BaseModel):
     transcript: str
+    filename: Optional[str] = None
+    source_type: Optional[str] = None
     category: Optional[str] = None
     sentiment: Optional[str] = None
     category_confidence: Optional[float] = None
@@ -13,15 +15,19 @@ class CallCreate(BaseModel):
     call_duration: Optional[int] = None
     resolved: Optional[bool] = False
     notes: Optional[str] = None
+    uploaded_at: Optional[datetime] = None
 
 
 class CallResponse(BaseModel):
     id: str
     transcript: str
+    filename: Optional[str] = None
+    source_type: Optional[str] = None
     category: str
     sentiment: str
     category_confidence: float
     sentiment_confidence: float
+    uploaded_at: Optional[datetime]
     timestamp: datetime
     call_duration: Optional[int] = None
     customer_phone: Optional[str] = None

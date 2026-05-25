@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { OverviewStats, CallListResponse, CategoryCount, CallResponse, CallIngestRequest, CallFilters } from '../types'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://127.0.0.1:8002/api',
 })
 
 export const fetchOverview = async (): Promise<OverviewStats> => {

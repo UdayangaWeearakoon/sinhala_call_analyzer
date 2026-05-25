@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ingestCall } from '../api'
-import type { CallResponse } from '../types'
+import type { CallResponse, CallIngestRequest } from '../types'
 import { Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp, Upload } from 'lucide-react'
 
 export function IngestCallForm() {
@@ -9,6 +9,7 @@ export function IngestCallForm() {
   const [transcript, setTranscript] = useState('')
   const [fileName, setFileName] = useState<string | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
+  const [apiMessage, setApiMessage] = useState<{ type: 'success' | 'warning' | 'error'; message: string } | null>(null)
   const [result, setResult] = useState<CallResponse | null>(null)
   const [expanded, setExpanded] = useState(false)
 
@@ -16,16 +17,36 @@ export function IngestCallForm() {
     mutationFn: ingestCall,
     onSuccess: (data) => {
       setResult(data)
+      setApiMessage({
+        type: 'success',
+        message: fileName
+          ? `Transcript file "${fileName}" uploaded and saved successfully.`
+          : 'Transcript analyzed and saved successfully.',
+      })
       queryClient.invalidateQueries({ queryKey: ['overview'] })
       queryClient.invalidateQueries({ queryKey: ['calls'] })
       queryClient.invalidateQueries({ queryKey: ['top-categories'] })
+    },
+    onError: (error) => {
+      const detail = (error as any)?.response?.data?.detail || (error as Error).message || 'Unable to ingest transcript.'
+      setApiMessage({
+        type: detail === 'This transcript file was already uploaded.' ? 'warning' : 'error',
+        message: detail,
+      })
     },
   })
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (!transcript.trim()) return
-    mutation.mutate({ transcript: transcript.trim() })
+
+    const payload: CallIngestRequest = {
+      transcript: transcript.trim(),
+      filename: fileName ?? null,
+    }
+
+    setApiMessage(null)
+    mutation.mutate(payload)
   }
 
   const processTextFile = (file: File) => {
@@ -72,6 +93,15 @@ export function IngestCallForm() {
             onChange={handleFileChange}
           />
 
+          {fileName && (
+            <div className="absolute left-4 top-4 inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
+              <span className="mr-2 rounded bg-slate-200 px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-slate-600">
+                File
+              </span>
+              <span className="truncate max-w-[180px]">{fileName}</span>
+            </div>
+          )}
+
           <textarea
             value={transcript}
             onChange={(e) => setTranscript(e.target.value)}
@@ -88,14 +118,22 @@ export function IngestCallForm() {
           </label>
         </div>
 
-        {fileName && (
-          <div className="mb-4 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-            Loaded file: <span className="font-medium text-slate-900">{fileName}</span>
-          </div>
-        )}
-
         {fileError && (
           <div className="mb-4 text-sm text-red-600">{fileError}</div>
+        )}
+
+        {apiMessage && (
+          <div
+            className={`mb-4 rounded-2xl border px-4 py-3 text-sm ${
+              apiMessage.type === 'success'
+                ? 'border-green-200 bg-green-50 text-green-700'
+                : apiMessage.type === 'warning'
+                ? 'border-amber-200 bg-amber-50 text-amber-700'
+                : 'border-red-200 bg-red-50 text-red-700'
+            }`}
+          >
+            {apiMessage.message}
+          </div>
         )}
 
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -121,6 +159,7 @@ export function IngestCallForm() {
               setFileName(null)
               setFileError(null)
               setResult(null)
+              setApiMessage(null)
             }}
             className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
           >
@@ -128,16 +167,6 @@ export function IngestCallForm() {
           </button>
         </div>
       </form>
-
-      {mutation.error && (
-        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-medium text-red-800">Failed to ingest call</p>
-            <p className="text-xs text-red-600 mt-1">{mutation.error.message}</p>
-          </div>
-        </div>
-      )}
 
       {result && (
         <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">

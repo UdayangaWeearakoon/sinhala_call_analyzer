@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Query, HTTPException
@@ -8,6 +8,7 @@ from src.database.repository import (
     create_call,
     get_calls,
     get_call_by_id,
+    get_call_by_hash,
     get_overview_stats,
     get_category_trend,
     get_top_categories,
@@ -22,6 +23,7 @@ from src.database.schemas import (
     CategoryTrendResponse,
 )
 from src.inference import CallAnalyticsPredictor
+from src.utils.hash_utils import generate_sha256_hash
 
 
 @asynccontextmanager
@@ -45,7 +47,14 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5175",
+        "http://127.0.0.1:5175",
+        "http://localhost:5176",
+        "http://127.0.0.1:5176",
+        "http://localhost:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,21 +63,48 @@ app.add_middleware(
 
 @app.post("/api/calls", response_model=CallResponse)
 async def ingest_call(call: CallCreate):
-    call_dict = call.model_dump()
-    if not call_dict.get("category") or not call_dict.get("sentiment"):
-        predictor = app.state.predictor
-        if predictor is None:
-            raise HTTPException(status_code=503, detail="ML models not loaded")
-        try:
-            result = predictor.predict(call_dict["transcript"])
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
-        call_dict["category"] = result["category"]
-        call_dict["sentiment"] = result["sentiment"]
-        call_dict["category_confidence"] = result["category_confidence"]
-        call_dict["sentiment_confidence"] = result["sentiment_confidence"]
+    transcript = call.transcript
+    filename = call.filename
+    file_hash = None
+    source_type = "text_input"
 
-    db_call = await create_call(call_dict)
+    if filename:
+        source_type = "file_upload"
+        file_hash = generate_sha256_hash(transcript)
+        print("========== DEBUG ==========")
+        print("Filename:", filename)
+        print("Hash:", file_hash)
+        print("Source Type:", source_type)
+        print("Transcript Length:", len(transcript))
+        print("===========================")
+        existing_call = await get_call_by_hash(file_hash)
+        if existing_call:
+            print("Duplicate detected, skipping insert")
+            raise HTTPException(status_code=409, detail="This transcript file was already uploaded.")
+
+    predictor = app.state.predictor
+    if predictor is None:
+        raise HTTPException(status_code=503, detail="ML models not loaded")
+    try:
+        result = predictor.predict(transcript)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
+
+    call_data = {
+        "transcript": transcript,
+        "category": result["category"],
+        "sentiment": result["sentiment"],
+        "category_confidence": result["category_confidence"],
+        "sentiment_confidence": result["sentiment_confidence"],
+        "filename": filename,
+        "file_hash": file_hash,
+        "source_type": source_type,
+        "uploaded_at": datetime.now(timezone.utc),
+    }
+
+    print("Saving to MongoDB...")
+    db_call = await create_call(call_data)
+    print("Saved to MongoDB successfully")
     await update_daily_aggregate(db_call.timestamp)
     return db_call
 
