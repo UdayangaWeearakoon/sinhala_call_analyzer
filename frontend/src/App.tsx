@@ -4,6 +4,7 @@ import { OverviewPage } from './pages/OverviewPage'
 import { CallDetailPage } from './pages/CallDetailPage'
 import { CallLogPage } from './pages/CallLogPage'
 import { CategoriesPage } from './pages/CategoriesPage'
+import { SentimentPage } from './pages/SentimentPage'
 import { useState } from 'react'
 
 const queryClient = new QueryClient({
@@ -92,6 +93,7 @@ function Layout() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
           <Route path="/" element={<OverviewPage />} />
+          <Route path="/sentiment" element={<SentimentPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/calls" element={<CallLogPage />} />
           <Route path="/calls/:id" element={<CallDetailPage />} />
