@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useCalls, useTopCategories } from '../hooks/useApi'
 import { format } from 'date-fns'
 import { Search, ChevronLeft, ChevronRight, RotateCcw, Loader2, AlertCircle, AlertTriangle } from 'lucide-react'
@@ -33,8 +33,13 @@ function ConfidenceBar({ value }: { value: number }) {
 
 export function CallLogPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
-  const [filters, setFilters] = useState<CallFilters>({ page: 1, page_size: 10 })
+  const [filters, setFilters] = useState<CallFilters>({
+    page: 1,
+    page_size: 10,
+    category: searchParams.get('category') || undefined,
+  })
   const [searchTerm, setSearchTerm] = useState('')
 
   const { data: topCategories } = useTopCategories(50)
@@ -183,7 +188,9 @@ export function CallLogPage() {
                       <td className="py-3 px-4 max-w-xs truncate text-gray-700">
                         <span className="flex items-center gap-1.5">
                           {call.category_confidence < 0.7 || call.sentiment_confidence < 0.7 ? (
-                            <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="Low confidence prediction" />
+                            <span title="Low confidence prediction">
+                              <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                            </span>
                           ) : null}
                           <span className="truncate">
                             {call.transcript.substring(0, 60)}

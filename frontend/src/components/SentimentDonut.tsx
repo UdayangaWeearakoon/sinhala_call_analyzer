@@ -47,7 +47,10 @@ export function SentimentDonut({ data }: SentimentDonutProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value: number) => [`${value} (${((value / total) * 100).toFixed(1)}%)`, 'Count']}
+            formatter={(value) => {
+              const count = Number(value ?? 0)
+              return [`${count} (${((count / total) * 100).toFixed(1)}%)`, 'Count']
+            }}
           />
           <Legend layout="horizontal" verticalAlign="bottom" align="center" />
         </PieChart>
