@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-do
 import { OverviewPage } from './pages/OverviewPage'
 import { CallDetailPage } from './pages/CallDetailPage'
 import { CallLogPage } from './pages/CallLogPage'
+import { CategoriesPage } from './pages/CategoriesPage'
 import { useState } from 'react'
-import logo from './assets/logo.png'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,7 +39,7 @@ function ErrorBoundary({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div onError={(e) => { setHasError(true); setError(e.error as Error) }}>
+    <div onError={(e) => { setHasError(true); setError((e as unknown as { error?: Error }).error ?? null) }}>
       {children}
     </div>
   )
@@ -92,6 +92,7 @@ function Layout() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
           <Route path="/" element={<OverviewPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/calls" element={<CallLogPage />} />
           <Route path="/calls/:id" element={<CallDetailPage />} />
         </Routes>

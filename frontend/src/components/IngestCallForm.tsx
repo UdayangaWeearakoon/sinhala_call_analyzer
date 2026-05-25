@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ingestCall } from '../api'
 import type { CallResponse, CallIngestRequest } from '../types'
-import { Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp, Upload } from 'lucide-react'
+import { Loader2, CheckCircle, ChevronDown, ChevronUp, Upload } from 'lucide-react'
 
 export function IngestCallForm() {
   const queryClient = useQueryClient()

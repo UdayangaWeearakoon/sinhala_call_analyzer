@@ -66,7 +66,9 @@ export function RecentCalls({ calls }: RecentCallsProps) {
               <tr key={call.id} className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/calls/${call.id}`)}>
                 <td className="py-3 px-4 max-w-xs truncate text-gray-700 flex items-center gap-1.5">
                   {call.category_confidence < 0.7 || call.sentiment_confidence < 0.7 ? (
-                    <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="Low confidence prediction" />
+                    <span title="Low confidence prediction">
+                      <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                    </span>
                   ) : null}
                   <span className="truncate">
                     {call.transcript.substring(0, 60)}
