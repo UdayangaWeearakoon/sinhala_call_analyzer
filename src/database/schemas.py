@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel
 
 
 class CallCreate(BaseModel):
@@ -19,7 +19,7 @@ class CallCreate(BaseModel):
 
 
 class CallResponse(BaseModel):
-    id: str
+    id: int
     transcript: str
     filename: Optional[str] = None
     source_type: Optional[str] = None
@@ -36,11 +36,6 @@ class CallResponse(BaseModel):
     notes: Optional[str] = None
 
     model_config = {"from_attributes": True}
-
-    @field_validator("id", mode="before")
-    @classmethod
-    def coerce_id(cls, v):
-        return str(v)
 
 
 class CallListResponse(BaseModel):
