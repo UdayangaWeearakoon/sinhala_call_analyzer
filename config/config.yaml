@@ -15,3 +15,13 @@ mysql:
   host: "${MYSQL_HOST}"
   port: "${MYSQL_PORT}"
   database: "${MYSQL_DB}"
+
+# ============================================================================
+# Transcript Pipeline (src/pipeline/)
+# Override via CLI args or env vars PIPELINE_INCOMING_DIR / _PROCESSED / _ERROR
+# ============================================================================
+pipeline:
+  incoming_dir: data/transcripts/incoming
+  processed_dir: data/transcripts/processed
+  error_dir: data/transcripts/error
+  poll_interval_secs: 30
