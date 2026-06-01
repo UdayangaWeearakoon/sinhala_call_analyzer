@@ -104,9 +104,9 @@ async def ingest_call(call: CallCreate):
         "uploaded_at": datetime.now(timezone.utc),
     }
 
-    print("Saving to MongoDB...")
+    print("Saving to MySQL...")
     db_call = await create_call(call_data)
-    print("Saved to MongoDB successfully")
+    print("Saved to MySQL successfully")
     await update_daily_aggregate(db_call.timestamp)
     return db_call
 
@@ -133,7 +133,7 @@ async def list_calls(
 
 
 @app.get("/api/calls/{call_id}", response_model=CallResponse)
-async def get_call(call_id: str):
+async def get_call(call_id: int):
     call = await get_call_by_id(call_id)
     if not call:
         raise HTTPException(status_code=404, detail="Call not found")

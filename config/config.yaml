@@ -9,8 +9,9 @@ paths:
   output_file: data/processed/combined.json
 
 # ============================================================================
-# MongoDB Atlas
+# MySQL
 # ============================================================================
-mongodb:
-  uri: "${MONGODB_URI}"
-  database: "sinhala_call_analytics"
+mysql:
+  host: "${MYSQL_HOST}"
+  port: "${MYSQL_PORT}"
+  database: "${MYSQL_DB}"
