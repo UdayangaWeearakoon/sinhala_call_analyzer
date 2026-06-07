@@ -42,10 +42,12 @@ class ModelTrainer:
         embeddings_path = os.path.join(self.embeddings_dir, "embeddings.npy")
         
         if os.path.exists(embeddings_path) and not force_recompute:
-            print("Loading cached embeddings...")
-            self.embeddings = np.load(embeddings_path)
-            print(f"Embeddings shape: {self.embeddings.shape}")
-            return self
+            cached = np.load(embeddings_path)
+            if cached.shape[0] == len(self.transcripts):
+                self.embeddings = cached
+                print(f"Embeddings shape: {self.embeddings.shape}")
+                return self
+            print(f"Cache stale: {cached.shape[0]} embeddings for {len(self.transcripts)} transcripts. Recomputing...")
         
         print("Extracting embeddings...")
         self.embeddings = []
@@ -54,7 +56,10 @@ class ModelTrainer:
             batch = self.transcripts[i:i + batch_size]
             
             for transcript in batch:
-                embedding = self.preprocessor.get_embeddings(transcript)
+                try:
+                    embedding = self.preprocessor.get_embeddings(transcript)
+                except Exception:
+                    embedding = np.zeros((768,), dtype=np.float32)
                 if embedding.ndim == 1:
                     embedding = embedding.reshape(1, -1)
                 self.embeddings.append(embedding)

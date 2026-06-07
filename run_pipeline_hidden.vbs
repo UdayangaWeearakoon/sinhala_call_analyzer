@@ -8,4 +8,4 @@ projectDir = "C:\Users\udaya\OneDrive\Desktop\sinhala_call_analytics"
 Set shell = CreateObject("WScript.Shell")
 command = """" & pythonExe & """ -m src.pipeline.main --watch"
 shell.CurrentDirectory = projectDir
-shell.Run command, 0, False
+shell.Run command, 0, True

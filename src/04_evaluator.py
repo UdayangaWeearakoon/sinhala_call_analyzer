@@ -39,10 +39,16 @@ class ModelEvaluator:
             self.summary = json.load(f)
         
         self.embeddings = np.load("data/embeddings/embeddings.npy")
-        
+
         with open("data/processed/combined.json", "r", encoding="utf-8") as f:
             data = json.load(f)
-        
+
+        if self.embeddings.shape[0] != len(data):
+            raise ValueError(
+                f"Embeddings count ({self.embeddings.shape[0]}) doesn't match "
+                f"transcript count ({len(data)}). Re-run src/03_trainer.py to regenerate embeddings."
+            )
+
         self.categories = [item["category"] for item in data]
         self.sentiments = [item["sentiment"] for item in data]
         
