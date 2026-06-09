@@ -40,6 +40,14 @@ class ModelEvaluator:
         
         self.embeddings = np.load("data/embeddings/embeddings.npy")
 
+        pca_path = os.path.join(self.models_dir, "pca.joblib")
+        scaler_path = os.path.join(self.models_dir, "scaler.joblib")
+        if os.path.exists(pca_path) and os.path.exists(scaler_path):
+            pca = joblib.load(pca_path)
+            scaler = joblib.load(scaler_path)
+            self.embeddings = pca.transform(scaler.transform(self.embeddings))
+            print(f"PCA applied: {self.embeddings.shape[1]} components")
+
         with open("data/processed/combined.json", "r", encoding="utf-8") as f:
             data = json.load(f)
 

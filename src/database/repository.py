@@ -5,7 +5,7 @@ import src.database as db
 from src.database.models import Call, DailyAggregate
 
 
-NEGATIVE_SENTIMENTS = ["Negative", "Very Negative"]
+NEGATIVE_SENTIMENTS = ["Negative"]
 
 
 async def create_call(call_data: dict) -> Call:

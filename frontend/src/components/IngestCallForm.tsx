@@ -77,7 +77,7 @@ export function IngestCallForm() {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
+    <div className="glass-card p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Ingest New Call</h3>
       <p className="text-sm text-slate-500 mb-5">
         Paste a Sinhala call transcript below or upload a transcript file directly.

@@ -6,9 +6,10 @@ import joblib
 from tqdm import tqdm
 
 import torch
+from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
 import xgboost as xgb
 
@@ -90,6 +91,26 @@ class ModelTrainer:
         
         return self
     
+    def reduce_dimensions(self, n_components=64):
+        print(f"\nReducing dimensions: 768 -> {n_components} via PCA...")
+        self.scaler = StandardScaler()
+        self.pca = PCA(n_components=n_components, random_state=42)
+
+        scaled = self.scaler.fit_transform(self.embeddings)
+        self.embeddings = self.pca.fit_transform(scaled)
+
+        variance = self.pca.explained_variance_ratio_.sum()
+        print(f"Explained variance: {variance:.2%}")
+        print(f"Reduced embeddings shape: {self.embeddings.shape}")
+
+        pca_path = os.path.join("data/models", "pca.joblib")
+        scaler_path = os.path.join("data/models", "scaler.joblib")
+        joblib.dump(self.pca, pca_path)
+        joblib.dump(self.scaler, scaler_path)
+        print(f"PCA saved to: {pca_path}")
+        print(f"Scaler saved to: {scaler_path}")
+        return self
+
     def train_model(self, model_type="xgboost", n_splits=5):
         X = self.embeddings
         
@@ -192,6 +213,7 @@ def main():
     trainer.load_data()
     trainer.extract_embeddings(force_recompute=False)
     trainer.encode_labels()
+    trainer.reduce_dimensions(n_components=64)
     results = trainer.train_model(model_type="xgboost", n_splits=5)
     summary = trainer.save_summary(results)
     

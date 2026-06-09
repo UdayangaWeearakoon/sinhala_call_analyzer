@@ -39,7 +39,7 @@ export function RecentCalls({ calls }: RecentCallsProps) {
 
   if (!calls || calls.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="glass-card p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Calls</h3>
         <div className="flex items-center justify-center h-40 text-gray-400">No calls found</div>
       </div>
@@ -47,7 +47,7 @@ export function RecentCalls({ calls }: RecentCallsProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="glass-card p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Calls</h3>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
