@@ -1,10 +1,15 @@
-import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts'
+import { PieChart, Pie, Cell } from 'recharts'
 
 const COLORS: Record<string, string> = {
-  Positive: '#22c55e',
+  Positive: '#10b981',
   Neutral: '#94a3b8',
-  Negative: '#ef4444',
-  'Very Negative': '#991b1b',
+  Negative: '#f43f5e',
+}
+
+const GLOW_COLORS: Record<string, string> = {
+  Positive: 'rgba(16,185,129,0.25)',
+  Neutral: 'rgba(148,163,184,0.2)',
+  Negative: 'rgba(244,63,94,0.25)',
 }
 
 interface SentimentDonutProps {
@@ -21,47 +26,69 @@ export function SentimentDonut({ data }: SentimentDonutProps) {
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="glass-card p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Sentiment Split</h3>
         <div className="flex items-center justify-center h-72 text-gray-400">No sentiment data available</div>
       </div>
     )
   }
 
+  const getPercentage = (value: number) => ((value / total) * 100).toFixed(1)
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="glass-card p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Sentiment Split</h3>
-      <div className="flex justify-center">
-        <PieChart width={320} height={280}>
-          <Pie
-            data={chartData}
-            cx={160}
-            cy={140}
-            innerRadius={60}
-            outerRadius={90}
-            paddingAngle={2}
-            dataKey="value"
-          >
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[entry.name] || '#6366f1'} />
+      <div className="relative flex justify-center">
+        <div className="relative" style={{ width: 200, height: 170 }}>
+          <PieChart width={200} height={170}>
+            <defs>
+              {chartData.map((entry) => (
+                <filter key={`glow-${entry.name}`} id={`glow-${entry.name}`}>
+                  <feDropShadow dx={0} dy={0} stdDeviation={4} floodColor={GLOW_COLORS[entry.name]} />
+                </filter>
+              ))}
+            </defs>
+            <Pie
+              data={chartData}
+              cx={100}
+              cy={85}
+              innerRadius={58}
+              outerRadius={73}
+              paddingAngle={3}
+              dataKey="value"
+              strokeWidth={0}
+            >
+              {chartData.map((entry) => (
+                <Cell
+                  key={`cell-${entry.name}`}
+                  fill={COLORS[entry.name]}
+                  filter={`url(#glow-${entry.name})`}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none" style={{ top: 0, left: 0, right: 0, bottom: 0, paddingTop: 10 }}>
+            {chartData.map(({ name, value }) => (
+              <div key={name} className="flex items-baseline gap-1 leading-tight">
+                <span className="text-lg font-bold tracking-tight" style={{ color: COLORS[name] }}>
+                  {getPercentage(value)}%
+                </span>
+                {/* <span className="text-[11px] font-medium text-gray-500">{name}</span>  */}
+                {/* Commented out the above label to reduce clutter, can be re-enabled if needed */}
+              </div>
             ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => {
-              const count = Number(value ?? 0)
-              return [`${count} (${((count / total) * 100).toFixed(1)}%)`, 'Count']
-            }}
-          />
-          <Legend layout="horizontal" verticalAlign="bottom" align="center" />
-        </PieChart>
+          </div>
+        </div>
       </div>
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+      <div className="flex justify-center gap-6 mt-3">
         {chartData.map(({ name, value }) => (
-          <div key={name}>
-            <p className="text-sm font-medium text-gray-500">{name}</p>
-            <p className="text-lg font-bold" style={{ color: COLORS[name] || '#6366f1' }}>
-              {((value / total) * 100).toFixed(1)}%
-            </p>
+          <div key={name} className="flex items-center gap-2">
+            <span
+              className="w-2.5 h-2.5 rounded-full"
+              style={{ backgroundColor: COLORS[name] }}
+            />
+            <span className="text-xs font-medium text-gray-600">{name}</span>
+            <span className="text-xs text-gray-400">{value}</span>
           </div>
         ))}
       </div>

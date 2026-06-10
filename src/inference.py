@@ -24,6 +24,17 @@ class CallAnalyticsPredictor:
             os.path.join(models_dir, "label_encoders.joblib")
         )
 
+        pca_path = os.path.join(models_dir, "pca.joblib")
+        scaler_path = os.path.join(models_dir, "scaler.joblib")
+        if os.path.exists(pca_path) and os.path.exists(scaler_path):
+            self.pca = joblib.load(pca_path)
+            self.scaler = joblib.load(scaler_path)
+            print(f"PCA loaded: {self.pca.n_components_} components")
+        else:
+            self.pca = None
+            self.scaler = None
+            print("No PCA found — using raw 768-dim embeddings")
+
         print("Models loaded successfully!\n")
 
     def predict(self, transcript):
@@ -31,6 +42,9 @@ class CallAnalyticsPredictor:
 
         if embedding.ndim == 1:
             embedding = embedding.reshape(1, -1)
+
+        if self.pca is not None and self.scaler is not None:
+            embedding = self.pca.transform(self.scaler.transform(embedding))
 
         category_encoded = self.category_model.predict(embedding)[0]
         sentiment_encoded = self.sentiment_model.predict(embedding)[0]

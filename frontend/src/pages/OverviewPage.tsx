@@ -51,7 +51,7 @@ export function OverviewPage() {
 
   if (!overview || !callsData || !topCategories) {
     return (
-      <div className="flex flex-col items-center justify-center h-96 gap-4">
+      <div className="glass-card flex flex-col items-center justify-center h-96 gap-4">
         <AlertCircle className="w-10 h-10 text-amber-500" />
         <p className="text-gray-600">No data available</p>
       </div>
@@ -72,16 +72,14 @@ export function OverviewPage() {
         totalCallsYesterday={overview.total_calls_yesterday}
         totalCallsThisMonth={overview.total_calls_this_month}
         positivePercentage={overview.positive_percentage}
-        resolutionRate={overview.resolution_rate}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SentimentDonut data={overview.sentiment_distribution} />
         <SentimentTrend data={overview.sentiment_trend} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <TopCategories data={topCategories} />
+        <div className="flex flex-col gap-6">
+          <SentimentDonut data={overview.sentiment_distribution} />
+          <TopCategories data={topCategories} />
+        </div>
       </div>
 
       <RecentCalls calls={callsData.calls} />

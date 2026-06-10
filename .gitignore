@@ -39,5 +39,13 @@ data/raw/
 *.log
 server.log
 
+# Transcript pipeline outputs (regeneratable)
+data/transcripts/processed/
+data/transcripts/incoming/
+data/transcripts/error/
+
+# Combined processed data (regeneratable from raw)
+data/processed/
+
 # Ruff cache
 .ruff_cache/

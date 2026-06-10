@@ -39,10 +39,24 @@ class ModelEvaluator:
             self.summary = json.load(f)
         
         self.embeddings = np.load("data/embeddings/embeddings.npy")
-        
+
+        pca_path = os.path.join(self.models_dir, "pca.joblib")
+        scaler_path = os.path.join(self.models_dir, "scaler.joblib")
+        if os.path.exists(pca_path) and os.path.exists(scaler_path):
+            pca = joblib.load(pca_path)
+            scaler = joblib.load(scaler_path)
+            self.embeddings = pca.transform(scaler.transform(self.embeddings))
+            print(f"PCA applied: {self.embeddings.shape[1]} components")
+
         with open("data/processed/combined.json", "r", encoding="utf-8") as f:
             data = json.load(f)
-        
+
+        if self.embeddings.shape[0] != len(data):
+            raise ValueError(
+                f"Embeddings count ({self.embeddings.shape[0]}) doesn't match "
+                f"transcript count ({len(data)}). Re-run src/03_trainer.py to regenerate embeddings."
+            )
+
         self.categories = [item["category"] for item in data]
         self.sentiments = [item["sentiment"] for item in data]
         
