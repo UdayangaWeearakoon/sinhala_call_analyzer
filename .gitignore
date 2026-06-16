@@ -29,6 +29,10 @@ data/results/
 
 # Raw data (sensitive, combined.json is sufficient)
 data/raw/
+data/transcripts/
+
+# Docs
+docs/
 
 # Environment variables
 .env
