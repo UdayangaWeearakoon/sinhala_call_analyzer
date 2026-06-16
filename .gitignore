@@ -28,8 +28,16 @@ data/embeddings/
 data/results/
 
 # Raw data (sensitive, combined.json is sufficient)
+# Ignore everything inside the raw data directory
 data/raw/
-data/transcripts/
+
+# Ignore all contents inside the transcript subfolders
+data/transcripts/error/*
+data/transcripts/incoming/*
+data/transcripts/processed/*
+
+# Always track .gitkeep files so empty folders persist in Git
+!**/ .gitkeep
 
 # Docs
 docs/
