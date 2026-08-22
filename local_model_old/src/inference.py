@@ -6,7 +6,7 @@ import joblib
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.preprocessor import SinhalaPreprocessor
+from local_model_old.src.preprocessor import SinhalaPreprocessor
 
 
 class CallAnalyticsPredictor:
@@ -77,8 +77,8 @@ class CallAnalyticsPredictor:
     async def predict_and_save(self, transcript, metadata=None):
         result = self.predict(transcript)
         try:
-            from src.database.models import Call
-            from src.database.repository import create_call
+            from local_model_old.src.database.models import Call
+            from local_model_old.src.database.repository import create_call
 
             call_data = {
                 "transcript": transcript,

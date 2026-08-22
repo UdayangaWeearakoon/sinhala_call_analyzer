@@ -23,7 +23,7 @@ async def init_db():
     engine = create_async_engine(DATABASE_URL, echo=False)
     async_session_maker = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-    from src.database.models import Base
+    from local_model_old.src.database.models import Base
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     print(f"Database initialized: {MYSQL_DB}")

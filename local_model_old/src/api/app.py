@@ -3,8 +3,8 @@ from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from src.database import init_db, close_db
-from src.database.repository import (
+from local_model_old.src.database import init_db, close_db
+from local_model_old.src.database.repository import (
     create_call,
     get_calls,
     get_call_by_id,
@@ -15,15 +15,15 @@ from src.database.repository import (
     update_daily_aggregate,
     refresh_all_daily_aggregates,
 )
-from src.database.schemas import (
+from local_model_old.src.database.schemas import (
     CallCreate,
     CallResponse,
     CallListResponse,
     OverviewResponse,
     CategoryTrendResponse,
 )
-from src.inference import CallAnalyticsPredictor
-from src.utils.hash_utils import generate_sha256_hash
+from local_model_old.src.inference import CallAnalyticsPredictor
+from local_model_old.src.utils.hash_utils import generate_sha256_hash
 
 
 @asynccontextmanager

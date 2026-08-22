@@ -13,8 +13,8 @@ async def process_file(filepath: Path, predictor, processed_dir: Path, error_dir
         if not transcript:
             raise ValueError("Empty transcript")
 
-        from src.utils.hash_utils import generate_sha256_hash
-        from src.database.repository import get_call_by_hash
+        from local_model_old.src.utils.hash_utils import generate_sha256_hash
+        from local_model_old.src.database.repository import get_call_by_hash
 
         file_hash = generate_sha256_hash(transcript)
         existing = await get_call_by_hash(file_hash)
@@ -25,7 +25,7 @@ async def process_file(filepath: Path, predictor, processed_dir: Path, error_dir
 
         result = predictor.predict(transcript)
 
-        from src.database.repository import create_call, update_daily_aggregate
+        from local_model_old.src.database.repository import create_call, update_daily_aggregate
 
         call_data = {
             "transcript": transcript,

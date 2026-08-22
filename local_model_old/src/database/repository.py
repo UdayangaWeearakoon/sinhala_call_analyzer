@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta, timezone, date
 from typing import Optional
 from sqlalchemy import select, func, case, and_, Text
-import src.database as db
-from src.database.models import Call, DailyAggregate
+import local_model_old.src.database as db
+from local_model_old.src.database.models import Call, DailyAggregate
 
 
 NEGATIVE_SENTIMENTS = ["Negative"]

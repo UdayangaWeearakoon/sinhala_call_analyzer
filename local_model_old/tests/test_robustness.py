@@ -10,8 +10,8 @@ import numpy as np
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore
 
-from src.preprocessor import SinhalaPreprocessor
-from src.inference import CallAnalyticsPredictor
+from local_model_old.src.preprocessor import SinhalaPreprocessor
+from local_model_old.src.inference import CallAnalyticsPredictor
 
 
 def section(title):

@@ -14,7 +14,7 @@ from sklearn.metrics import classification_report, accuracy_score
 import xgboost as xgb
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.preprocessor import SinhalaPreprocessor
+from local_model_old.src.preprocessor import SinhalaPreprocessor
 
 
 class ModelTrainer:

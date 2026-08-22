@@ -22,14 +22,14 @@ def resolve_dir(value: str | None, env_var: str, default: Path) -> Path:
 
 
 async def run_once(predictor, incoming_dir, processed_dir, error_dir) -> dict:
-    from src.pipeline.processor import process_all_files
+    from local_model_old.src.pipeline.processor import process_all_files
 
     stats = await process_all_files(incoming_dir, processed_dir, error_dir, predictor)
     return stats
 
 
 async def run_watch(predictor, incoming_dir, processed_dir, error_dir, interval: int):
-    from src.database import init_db, close_db
+    from local_model_old.src.database import init_db, close_db
 
     await init_db()
     logger.info("Watch mode enabled (polling every %ds)", interval)
@@ -91,7 +91,7 @@ def main():
     logger.info("  Processed: %s", processed_dir.resolve())
     logger.info("  Error:     %s", error_dir.resolve())
 
-    from src.inference import CallAnalyticsPredictor
+    from local_model_old.src.inference import CallAnalyticsPredictor
 
     predictor = CallAnalyticsPredictor(models_dir=args.models_dir)
 
@@ -99,7 +99,7 @@ def main():
         asyncio.run(run_watch(predictor, incoming_dir, processed_dir, error_dir, args.interval))
     else:
         async def _oneshot():
-            from src.database import init_db, close_db
+            from local_model_old.src.database import init_db, close_db
 
             await init_db()
             try:
