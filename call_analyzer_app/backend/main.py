@@ -54,3 +54,17 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
         raise HTTPException(status_code=401, detail="Token has expired")
     except (auth.jwt.InvalidTokenError, ValueError):
         raise HTTPException(status_code=401, detail="Invalid token")
+
+
+
+
+# --- Auth models ---
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"    
