@@ -40,5 +40,8 @@ pool = mysql.connector.pooling.MySQLConnectionPool(
     database=os.getenv("DB_NAME", "call_analyzer"),
 )
 
+
 def get_connection() -> mysql.connector.MySQLConnection:
     return pool.get_connection()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
