@@ -1,6 +1,9 @@
 import logging
 import os
 
+from openai import OpenAI
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
+
 logger = logging.getLogger(__name__)
 
 MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
@@ -24,3 +27,55 @@ Rules:
 """
 
 SYSTEM_INSTRUCTION = "You are a call transcript classifier." + CLASSIFICATION_FRAMEWORK
+
+
+
+@retry(
+    stop=stop_after_attempt(5),
+    wait=wait_exponential(multiplier=1, min=2, max=120),
+    retry=retry_if_exception(is_retryable),
+)
+def _call_api(client, prompt):
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_INSTRUCTION},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=MAX_TOKENS,
+        response_format={"type": "json_object"},
+    )
+    return response.choices[0].message.content
+
+
+def classify(text: str) -> tuple[str, float]:
+    client = OpenAI(
+        api_key=os.getenv("OPENROUTER_API_KEY"),
+        base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+    )
+    prompt = "Classify the following call transcript:\n\n" + text
+
+    for attempt in range(2):
+        try:
+            content = _call_api(client, prompt)
+        except Exception as exc:
+            raise exc
+
+        try:
+            result = ClassificationResult.model_validate_json(content)
+            return result.category, result.confidence
+        except ValidationError as e:
+            if attempt == 0:
+                logger.warning("Schema validation failed (retry with stricter prompt): %s", e)
+                prompt = (
+                    "You MUST respond with valid JSON only. No markdown, no code fences, no explanation.\n"
+                    'Format: {"category": "<category>", "confidence": <0.0-1.0>}\n\n'
+                    "Transcript:\n" + text
+                )
+                continue
+            logger.error("Schema validation failed after retry: %s", e)
+            raise ClassificationSchemaError(
+                f"Model returned invalid schema after retry: {e}"
+            ) from e
+
+    raise RuntimeError("Unexpected: classify fell through")
