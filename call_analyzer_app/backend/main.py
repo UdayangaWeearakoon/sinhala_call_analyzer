@@ -45,3 +45,12 @@ def get_connection() -> mysql.connector.MySQLConnection:
     return pool.get_connection()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
+
+
+def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
+    try:
+        return auth.decode_access_token(token)
+    except auth.jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except (auth.jwt.InvalidTokenError, ValueError):
+        raise HTTPException(status_code=401, detail="Invalid token")
