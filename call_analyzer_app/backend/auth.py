@@ -19,3 +19,10 @@ def create_access_token(username: str) -> str:
         "iat": datetime.now(timezone.utc),
     }
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+def decode_access_token(token: str) -> str:
+    payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+    username = payload.get("sub")
+    if not username:
+        raise ValueError("Invalid token payload")
+    return username
