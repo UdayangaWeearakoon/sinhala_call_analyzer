@@ -1,13 +1,14 @@
+import json
 import logging
 import os
 
 from openai import OpenAI
+from pydantic import BaseModel, ValidationError, field_validator
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
 
 logger = logging.getLogger(__name__)
 
 MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
-MAX_TOKENS = int(os.getenv("OPENROUTER_MAX_TOKENS", "256"))
 
 CLASSIFICATION_FRAMEWORK = """
 Analyze the call transcript (English, Sinhala, or Singlish) and output the single best category based on the primary intent.
@@ -28,6 +29,57 @@ Rules:
 
 SYSTEM_INSTRUCTION = "You are a call transcript classifier." + CLASSIFICATION_FRAMEWORK
 
+BATCH_ITEM_TEMPLATE = "--- ID: {id} ---\n{text}"
+
+BATCH_PROMPT_TEMPLATE = (
+    "Classify the following call transcripts. "
+    "Output a JSON array where each element has the transcript's id, "
+    "its category, and a confidence score.\n\n"
+    "{items}\n\n"
+    'Return ONLY a valid JSON array: '
+    '[{{"id": "<id>", "category": "<category>", "confidence": 0.0}}]'
+)
+
+STRICTER_BATCH_PROMPT = (
+    "You MUST respond with valid JSON only. No markdown, no code fences, no explanation.\n"
+    'Format: [{{"id": "<id>", "category": "<category>", "confidence": 0.0}}]\n\n'
+    "Transcripts:\n{items}"
+)
+
+
+class ClassificationResult(BaseModel):
+    category: str
+    confidence: float
+
+
+class BatchClassificationItem(BaseModel):
+    id: str
+    category: str
+    confidence: float
+
+    @field_validator("id", mode="before")
+    @classmethod
+    def coerce_id(cls, v):
+        return str(v)
+
+
+class ClassificationSchemaError(Exception):
+    """Model returned invalid JSON after retry."""
+    pass
+
+
+def is_retryable(exc):
+    from openai import APIStatusError, APIConnectionError, APITimeoutError
+    if isinstance(exc, (APIConnectionError, APITimeoutError)):
+        return True
+    if isinstance(exc, APIStatusError) and exc.status_code in (429, 500, 502, 503):
+        return True
+    if isinstance(exc, (ConnectionError, TimeoutError)):
+        return True
+    return False
+
+
+MAX_TOKENS = int(os.getenv("OPENROUTER_MAX_TOKENS", "256"))
 
 
 @retry(
@@ -80,42 +132,36 @@ def classify(text: str) -> tuple[str, float]:
 
     raise RuntimeError("Unexpected: classify fell through")
 
-from typing import Literal
-from pydantic import BaseModel, Field, ValidationError, field_validator
 
-class CallAnalysisFields(BaseModel):
-    category: Literal[
-        "Billing",
-        "Fault Reporting",
-        "Products",
-        "Technical Assistance",
-        "Directory Inquiries",
-        "Extra GB",
-    ]
-    customer_request: str
-    resolution_status: Literal["Resolved", "Partially Resolved", "Not Resolved", "Unknown"]
-    satisfaction: Literal["Satisfied", "Neutral", "Dissatisfied", "Unknown"]
-    follow_up_required: bool
-    call_summary: str
-    resolution_evidence: str | None = None
-    satisfaction_evidence: str | None = None
-    confidence: float = Field(ge=0.0, le=1.0)
-    resolution_confidence: float = Field(ge=0.0, le=1.0)
-    satisfaction_confidence: float = Field(ge=0.0, le=1.0)
+def classify_transcript_batch(items: list[dict]) -> list[BatchClassificationItem]:
+    client = OpenAI(
+        api_key=os.getenv("OPENROUTER_API_KEY"),
+        base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+    )
 
-class ClassificationResult(CallAnalysisFields):
-    pass
+    item_blocks = "\n\n".join(
+        BATCH_ITEM_TEMPLATE.format(id=item["id"], text=item["text"])
+        for item in items
+    )
+    prompt = BATCH_PROMPT_TEMPLATE.format(items=item_blocks)
 
-class BatchClassificationItem(CallAnalysisFields):
-    id: str
-    @field_validator("id", mode="before")
-    @classmethod
-    def coerce_id(cls, value):
-        return str(value)
+    for attempt in range(2):
+        try:
+            content = _call_api(client, prompt)
+        except Exception as exc:
+            raise exc
 
-class BatchClassificationResponse(BaseModel):
-    results: list[BatchClassificationItem]
+        try:
+            raw_list = json.loads(content)
+            return [BatchClassificationItem.model_validate(item) for item in raw_list]
+        except (json.JSONDecodeError, ValidationError) as e:
+            if attempt == 0:
+                logger.warning("Batch schema validation failed (retry with stricter prompt): %s", e)
+                prompt = STRICTER_BATCH_PROMPT.format(items=item_blocks)
+                continue
+            logger.error("Batch schema validation failed after retry: %s", e)
+            raise ClassificationSchemaError(
+                f"Batch model returned invalid schema after retry: {e}"
+            ) from e
 
-class ClassificationSchemaError(Exception):
-    """Raised when the model returns invalid JSON/schema after retry attempt."""
-    pass
+    raise RuntimeError("Unexpected: classify_transcript_batch fell through")
