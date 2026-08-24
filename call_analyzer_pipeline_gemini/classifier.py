@@ -79,3 +79,43 @@ def classify(text: str) -> tuple[str, float]:
             ) from e
 
     raise RuntimeError("Unexpected: classify fell through")
+
+from typing import Literal
+from pydantic import BaseModel, Field, ValidationError, field_validator
+
+class CallAnalysisFields(BaseModel):
+    category: Literal[
+        "Billing",
+        "Fault Reporting",
+        "Products",
+        "Technical Assistance",
+        "Directory Inquiries",
+        "Extra GB",
+    ]
+    customer_request: str
+    resolution_status: Literal["Resolved", "Partially Resolved", "Not Resolved", "Unknown"]
+    satisfaction: Literal["Satisfied", "Neutral", "Dissatisfied", "Unknown"]
+    follow_up_required: bool
+    call_summary: str
+    resolution_evidence: str | None = None
+    satisfaction_evidence: str | None = None
+    confidence: float = Field(ge=0.0, le=1.0)
+    resolution_confidence: float = Field(ge=0.0, le=1.0)
+    satisfaction_confidence: float = Field(ge=0.0, le=1.0)
+
+class ClassificationResult(CallAnalysisFields):
+    pass
+
+class BatchClassificationItem(CallAnalysisFields):
+    id: str
+    @field_validator("id", mode="before")
+    @classmethod
+    def coerce_id(cls, value):
+        return str(value)
+
+class BatchClassificationResponse(BaseModel):
+    results: list[BatchClassificationItem]
+
+class ClassificationSchemaError(Exception):
+    """Raised when the model returns invalid JSON/schema after retry attempt."""
+    pass
