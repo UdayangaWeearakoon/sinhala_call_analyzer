@@ -70,6 +70,12 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"    
 
 
+# --- Auth endpoints ---
+
+@app.post("/api/auth/login", response_model=TokenResponse)
+def login(body: LoginRequest):
+    if not auth.verify_credentials(body.username, body.password):
+        raise HTTPException(status_code=401, detail="Invalid username or password")
 
 
 
