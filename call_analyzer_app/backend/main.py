@@ -78,5 +78,8 @@ def login(body: LoginRequest):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
 
+token = auth.create_access_token(body.username)    
+
+
 
     
