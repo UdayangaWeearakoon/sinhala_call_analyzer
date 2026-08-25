@@ -100,4 +100,4 @@ def get_call_analytics(
     page: int = Query(1, ge=1, description="Page number (1-based)"),
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
 ) -> dict[str, Any]:
-    conn = _connection()
+    conn = get_connection()
