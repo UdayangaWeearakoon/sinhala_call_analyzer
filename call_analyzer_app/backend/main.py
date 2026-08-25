@@ -87,8 +87,17 @@ def login(body: LoginRequest):
 
 
 
-
-
 @app.get("/api/auth/me")
 def get_me(current_user: str = Depends(get_current_user)):
     return {"username": current_user}
+
+
+# --- Protected endpoints ---
+
+@app.get("/api/call-analytics")
+def get_call_analytics(
+    current_user: str = Depends(get_current_user),
+    page: int = Query(1, ge=1, description="Page number (1-based)"),
+    per_page: int = Query(20, ge=1, le=100, description="Items per page"),
+) -> dict[str, Any]:
+    conn = _connection()
