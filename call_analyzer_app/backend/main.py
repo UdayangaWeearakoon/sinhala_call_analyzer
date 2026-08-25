@@ -72,15 +72,14 @@ class TokenResponse(BaseModel):
 
 # --- Auth endpoints ---
 
+# --- Auth endpoints ---
+
 @app.post("/api/auth/login", response_model=TokenResponse)
 def login(body: LoginRequest):
     if not auth.verify_credentials(body.username, body.password):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
-
-token = auth.create_access_token(body.username)    
-
-logger.info("User '%s' logged in", body.username)
-
-
-    
+    # මේ පේළි 3 නිවැරදිව indent කර function එක ඇතුළට ගත යුතුයි
+    token = auth.create_access_token(body.username)    
+    logger.info("User '%s' logged in", body.username)
+    return TokenResponse(access_token=token)
