@@ -83,3 +83,12 @@ def login(body: LoginRequest):
     token = auth.create_access_token(body.username)    
     logger.info("User '%s' logged in", body.username)
     return TokenResponse(access_token=token)
+
+
+
+
+
+
+@app.get("/api/auth/me")
+def get_me(current_user: str = Depends(get_current_user)):
+    return {"username": current_user}
