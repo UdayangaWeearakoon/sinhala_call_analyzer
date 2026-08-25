@@ -80,6 +80,7 @@ def login(body: LoginRequest):
 
 token = auth.create_access_token(body.username)    
 
+logger.info("User '%s' logged in", body.username)
 
 
     
