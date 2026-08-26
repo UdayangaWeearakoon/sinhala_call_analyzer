@@ -1,0 +1,25 @@
+Agent: Hello, I am Piumi. How can I assist you?
+Customer: Miss, can I add 5 GB?
+Agent: Yes, madam. Is the connection number the one you have entered?
+Customer: Yes, madam.
+Agent: What is the owner's name?
+Customer: My name is E. S. Weerasinghe.
+Agent: Okay, let me check. Please hold the line for a minute.
+Customer: Okay.
+Agent: Thank you for waiting. You need 5, right, madam?
+Customer: Yes.
+Agent: Can I have the owner's ID number?
+Customer: 96 77 61 621 V.
+Agent: What is the address?
+Customer: 137, Ethul Kotte, Mothagona.
+Agent: You said you need 5, right?
+Customer: Yes.
+Agent: It has been added. You can turn your device off and on to use it. Next time, you can also get it from the app. The direct number is 0112 12 12 12.
+Customer: Miss, can I know the current bill amount?
+Agent: Let me check. Please hold the line for a minute.
+Customer: [unintelligible]
+Agent: Thank you for waiting. It is 5,732.
+Customer: Alright miss, thank you.
+Agent: Do you need to know anything else?
+Customer: No, miss.
+Agent: Please stay on the line to rate the service provided. Thank you for calling SLT Mobitel.

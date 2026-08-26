@@ -1,0 +1,25 @@
+Agent: Hello, I am Chamath. Can I help you?
+Customer: Hello. I want to know if my package is finished.
+Agent: Under whose name is the connection, sir?
+Customer: E D A Saranga.
+Agent: Right, sir. Please stay on the line.
+Customer: Right.
+Agent: Thank you for waiting. Sir, the 40 daytime GB is finished. There are 56.3 nighttime GB remaining, sir.
+Customer: Then what is this package? Daytime is 40, right?
+Agent: Day 40, night 60.
+Customer: Night 60. If I want to upgrade this a bit, what is the process?
+Agent: Sir, but you will not be able to get this package again. This package has been removed now. If you do not intend to downgrade again, changing it is not a problem. The new packages you can get from now on are Anytime packages, sir. There is the Anytime 80 GB package, sir, it is 2,690.
+Customer: Anytime 80. What else is there?
+Agent: 2,690 plus tax will be charged. That is the only Anytime package. Otherwise, there is the unlimited package, sir, for 5,900, the unlimited home package. It is 5,900 plus tax, sir. The download speed is 100. The upload speed is half of that. Both packages are good, sir.
+Customer: Right. Then to get extra GB on this now, when does my package renew again?
+Agent: It renews on the 8th, sir. The day after tomorrow.
+Customer: Right. I can get about five until then, right?
+Agent: You can, sir. What is the address, sir?
+Customer: Pardon?
+Agent: The address?
+Customer: Mananpara, Porondanda.
+Agent: Right. 5 GB, right?
+Customer: Yes.
+Agent: Please check now, sir, the line will connect.
+Customer: Right, thank you.
+Agent: You are welcome. Thank you for calling Sri Lanka Telecom Mobitel. Have a good day. Please stay on the line to rate this call.

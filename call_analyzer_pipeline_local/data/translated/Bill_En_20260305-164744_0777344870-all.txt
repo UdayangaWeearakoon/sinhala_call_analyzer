@@ -1,0 +1,38 @@
+Agent: Hello, I am Nadeemi. How can I assist you?
+Customer: Madam, I have a telephone. The telephone number is 011 2590 189.
+Agent: Okay.
+Customer: It has been disconnected. I am Charitha Nissanka Wijewardana.
+Agent: Okay, what do you need to know, sir?
+Customer: I need to make a payment for this. All this time I paid using the Bank of Ceylon app, but now it is asking for an account number. Do you have an account number for this?
+Agent: Yes, we send you an account number. You receive it via SMS, on the bill, or you can check your email.
+Customer: But it has not been sent this time. I have not received anything.
+Agent: The bill does not come to your house, sir. It comes to your email. We have not issued last month's bill yet, sir.
+Customer: Yes, then how do I pay the bill?
+Agent: The bill is sent to you as an email to cw_wijewardana@gmail.com. This is how the bills have been sent to you since 2019, sir.
+Customer: Okay, then tell me, don't you have the account number on your screen?
+Agent: I can give you the account number. To verify, could you please tell me the owner's National Identity Card number?
+Customer: Yes, 57045
+Agent: Okay.
+Customer: 2377.
+Agent: Okay, please write down the account number, sir.
+Customer: Yes.
+Agent: Go ahead.
+Customer: 02
+Customer: Yes.
+Agent: 407
+Customer: Yes.
+Agent: 438
+Customer: Yes.
+Agent: 81.
+Customer: 81, that is the account number, right? Thank you. How much is there to pay right now?
+Agent: Sir, you made an overpayment in February. Therefore, you do not have a bill to pay at the moment. You have paid 1,700 extra. We will issue the next bill after the first of April. It is sufficient if you check that bill and make the payment, sir.
+Customer: Right, my bill usually comes to around 1,300 for this.
+Agent: Yes.
+Customer: I will deposit an extra amount for that, then it will be fine, right?
+Agent: Yes, that is not an issue. You have already paid 1,700 extra. As I mentioned earlier, the next bill will be issued after the first of April. You can check it then, sir.
+Customer: Yes, I cannot wait until then. I will pay before that somehow.
+Agent: That is not a problem. You can make a payment of any amount you prefer.
+Customer: Alright, thank you.
+Agent: Okay sir, is there anything else you need to know?
+Customer: No, that is all. Thank you.
+Agent: Thank you for calling SLT Mobitel. Have a good day. Please stay on the line to rate this call.

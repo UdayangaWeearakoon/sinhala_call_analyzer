@@ -1,0 +1,17 @@
+Agent: Hello, I am Priyanthi. Can I help you?
+Customer: Hello miss. I want to get one GB for this entered number.
+Agent: What is the connection owner's name, madam?
+Customer: Pardon?
+Agent: Please state the connection owner's name.
+Customer: R G K G Jayanthi.
+Agent: How many GB do you need? Do you mean one GB?
+Customer: Give me one for now.
+Agent: I will add one GB. Please confirm the connection owner's ID number.
+Customer: 775803171V.
+Agent: Please state the location address as well, madam.
+Customer: 97/5 C, Dharmasiddhi Mawatha, Asgiriya, Kandy.
+Agent: I added one GB, madam. Please check.
+Customer: Is it done, miss?
+Agent: Do you need to know anything else?
+Customer: No. Thank you.
+Agent: Thank you for calling SLT Mobitel. Have a good day. Please stay on the line to rate this call.

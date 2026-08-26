@@ -1,0 +1,23 @@
+Agent: හෙලෝ.
+Customer: හෙලෝ.
+Agent: හෙලෝ.
+Customer: ආයුබෝවන්.
+Agent: අ.. [cough] මිස් මට ජනාධිපති ලේකම් කාර්යාලයේ නම්බර් එක දෙනවද?
+Customer: ඇමතුමේ රැඳී සිටින්න සර්.
+Agent: හා.
+Customer: ඇමතුමේ රැඳී සිටින්න සර්.
+Agent: හා, මැඩම් සද්දේ පොඩ්ඩක් අඩු කරන්නකෝ.
+Customer: ඇමතුමේ රැඳී සිටින්න.
+Agent: හරි මැඩම්.
+Customer: සර්,
+Agent: ඔව්.
+Customer: සටහන් කරගන්න.
+Agent: ආ කියන්න.
+Customer: 0 1 1
+Agent: ඔව්.
+Customer: 2 3 5
+Agent: 2 3 5
+Customer: 4 3
+Agent: ඔව්.
+Customer: හරි.
+Agent: හරි සර්.

@@ -1,0 +1,23 @@
+Agent: Ayubowan, Sri Lanka Telecom, how may I help you?
+Customer: Hello, can I know my uh balance?
+Agent: Okay, for the number what you entered, 0112055137 [unintelligible]?
+Customer: Yes, yes.
+Agent: Who is the owner of this line, madam?
+Customer: Anukrodhan Gopal.
+Agent: Okay.
+Agent: Right now, you you have 1,000, sorry, Rs. 18,161 and 18 cents.
+Customer: Correct, we have to pay, no?
+Agent: Yes, madam.
+Customer: [unintelligible] is it possible for y'all to send it via me SMS?
+Agent: Okay, the registered mobile number given is 0777530523, is that okay?
+Customer: No, you send it to 0716
+Agent: 0716
+Customer: 90
+Agent: 90
+Customer: 8284. Also, no, you send it to the same number, it's okay.
+Agent: To the registered mobile itself?
+Customer: Yeah, registered mobile itself, because earlier I used to dial 21 21212 and I get the balance. Now, that option is not there, no?
+Agent: Right, okay. I have updated, okay?
+Customer: No, you can have the same number, registered number.
+Agent: Okay.
+Customer: Okay, thank you.
