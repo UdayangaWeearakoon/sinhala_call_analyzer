@@ -1,0 +1,39 @@
+Agent: Hello. I am Harsha. Can I help you?
+Customer: Our Peo TV was disconnected due to unpaid bills.
+Agent: Yes.
+Customer: I paid the bill today. It has not been reconnected yet.
+Agent: Please tell me the number, sir. Is it the phone number you entered?
+Customer: 0 4 5, yes.
+Agent: Right.
+Customer: 0 4 5 22 56 109.
+Agent: Yes. I will check.
+Customer: Karunadasa's.
+Agent: Did you pay a bill of 3500, sir?
+Customer: Yes.
+Agent: The connection has been restored. Did you try turning on the TV, sir?
+Customer: I checked, miss. I just checked, the line has not come yet, right?
+Agent: What message is displayed when you turn on the TV now?
+Customer: It shows the same message from the morning, saying it is suspended and to pay the bills.
+Agent: Now sir, please switch off both the Peo TV box and the TV, and switch them on again. The black box near the TV,
+Customer: Yes.
+Agent: Switch off both that and the TV, and switch them on again. Can you do it now while I stay on the line?
+Customer: Right, miss.
+Customer: [unintelligible]
+Agent: Hello.
+Customer: Hello, miss.
+Agent: Yes, tell me, sir.
+Customer: Wait a little bit, miss.
+Agent: Is it done, sir?
+Customer: No, miss. Miss, what is my remaining bill balance?
+Agent: There is 2690 and 99 cents more, sir.
+Customer: 2690 and cents.
+Agent: 2690 and 99 cents.
+Customer: Right. Please wait a bit, miss, it has not turned on yet.
+Customer: Right, miss. It turned on.
+Agent: Right. It is working, right?
+Customer: Yes, miss. Right.
+Agent: Do you need to know anything else?
+Customer: No, miss. You said the bill is 2000 something, right?
+Agent: Yes. That is all that is left.
+Customer: Right, miss.
+Agent: Please stay on the line to rate the service. Thank you for calling Sri Lanka Telecom Mobitel. Have a good day.

@@ -1,0 +1,41 @@
+Agent: Hello, I am Sagarika. Can I help you?
+Customer: Hello miss. I am Dinesh calling from Kalubowila.
+Agent: Right.
+Customer: Hello.
+Customer: I have a fiber connection at my home.
+Customer: It is an old connection. It is a Huawei router.
+Agent: Yes sir.
+Customer: The house is wired with Cat six. Now when I plug in to get another router extension from another place,
+Customer: what is the setting to be done on that Huawei router? How should it be done?
+Agent: Does that mean you are using Wi-Fi, sir? Or else,
+Agent: Or else sir, wired from another place...
+Customer: It is wired. Cat six wired, yes, it is connected by cable.
+Customer: Then now the SLT router is connected to the WAN line.
+Agent: Yes sir.
+Customer: Now if it is wireless, I can press the WPS button, press the WPS button on the other side, and synchronize the two routers, right?
+Agent: Yes, wirelessly.
+Customer: Wirelessly. Now this is not wireless.
+Customer: It is wired, right? Is there any setting to be done when it is wired?
+Agent: Sir, have the router configurations been done for the current place? There is one right now, isn't there?
+Customer: Yes. You mean the SLT router?
+Agent: Yes, are you currently using the SLT router by adjusting the router settings through the wire?
+Customer: No, no. I am just about to set it up. Then after going to those settings,
+Customer: do I need to make any change in our settings there?
+Agent: Yes, the router settings need to be adjusted. Did you not set up the settings all this time, sir?
+Agent: Have you not adjusted the settings currently?
+Customer: No. I did not set it up for this.
+Agent: Right. Please check if the phone number is correct. 0 1 1 2 58 24 1 7. Is it correct, sir?
+Customer: Right.
+Agent: The owner's name?
+Customer: Mahesh Ananda Karunaratne.
+Agent: Thank you for providing the information. I will forward it to the technical division. They will call your home, please provide a mobile phone number for me to connect with you.
+Customer: Will they call now? Or will they call after some time?
+Agent: It is like this sir, it is handled by the technical division. I will forward it and ask them to look into it quickly. Then they will call your home and assist you, sir. They will assist you online.
+Customer: Right. 0718
+Agent: Right.
+Customer: 728026
+Agent: Please stay on the line.
+Customer: Right.
+Agent: Right, from my end I asked them to look into it as soon as possible. They will call, sir.
+Customer: Okay, thank you very much.
+Agent: Thank you for calling the Sri Lanka Telecom Mobitel line. Have a good day, sir!

@@ -1,0 +1,22 @@
+Agent: Hello, I am Thushani. Can I help you?
+Customer: My name is Darryl. I just want to know today in the morning on my PEO TV a lot of channels are saying not available. Like CNN, Al Jazeera and couple of channels.
+Agent: Any in particular reason? Ah no sir, there is not any common issue. So is it the same number now you are calling from?
+Customer: Sorry?
+Agent: Is it the same number now you are calling from? Yes, yes, yes, yes.
+Customer: May I know the owner's name please, sir? Darryl VanDort
+Agent: Did you check with restarting your connection, sir?
+Customer: Restarting? Yeah, I have switched it off and switched it on the decoder but still it is showing the channel is not available.
+Agent: Okay then, I already informed regarding that matter to our technical staff. They will check and attend as soon as possible. Can I get any contact mobile number, sir?
+Customer: 077
+Agent: Okay.
+Customer: 181
+Agent: Okay.
+Customer: 3940
+Agent: Okay then, I already informed to them. They will check and let you know, sir.
+Customer: This is the technical team, right?
+Agent: Yes, sir.
+Customer: Yeah because otherwise you know it says the channel which are not there, it will say to subscribe. But these channels are saying channel is not available.
+Agent: Ah okay.
+Customer: So, I already informed to them, sir. Right, okay. They will get back to me. Okay, thank you.
+Agent: Okay sir, thank you for calling.
+Customer: Okay.
