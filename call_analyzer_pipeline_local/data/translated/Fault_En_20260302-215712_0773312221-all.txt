@@ -1,0 +1,22 @@
+Agent: Ayubowan, I am Lakshmini. How may I help you?
+Customer: Yeah, ayubowan. This regarding my uh Peo TV connection. I can't get any channels.
+Agent: May I know the connection owner's name, please, sir?
+Customer: L. S. Dasbannara.
+Agent: Mr. Dasbannara, the connection is active. What about the phone line, sir? Is it working? And the uh internet connection?
+Customer: Now, I watch Netflix. I can watch Netflix, but uh it says network disconnected, channel unavailable. Either, yeah, phone is working.
+Agent: Phone is working. And the Wi-Fi connection, sir, is it working?
+Customer: Yeah, yeah. All the lights are on.
+Agent: Okay. Please hold on, sir.
+Customer: Okay.
+Agent: Please hold on.
+Customer: Yeah.
+Agent: Thank you for holding, sir. Your connection is active. There's no any issue with the system. Did you restart your router and set-up box, sir? And, No, but then I was watching Netflix. Netflix is okay. My Wi-Fi is okay. Internet is okay, but my Peo TV is network network disconnected, channel unavailable. Any reason for that?
+Agent: From our side it's functional, sir. Restart the router and the set-up box and the uh network cable. Check that. May I know your name, please? I will lodge a complaint.
+Customer: Okay, lodge a complaint. Because, you know, it's very difficult to get through to you all. I've been holding on for half an hour till this was connected. Okay. Because it can't go with this, this.
+Agent: There's no any system issue, sir. So, I will lodge a complaint to the relevant section and restart the router and set-up box. And the network cable that should be connected to router LAN 4 port, unplug and uh plug it again. I will lodge a complaint, sir. May I know your name, please?
+Customer: L. S. Dasbannara.
+Agent: Okay, can I have a contact number?
+Customer: Uh the same number I'm calling on.
+Agent: This calling number. Okay, sir. I will lodge a complaint. They will check it and contact you, sir.
+Customer: Okay, right. Thank you.
+Agent: Okay, thank you for calling SLT. Have a nice day. Please hold on to rate this call.

@@ -1,0 +1,20 @@
+Agent: Hello, I am [unintelligible]. How can I assist you?
+Customer: Our Peo TV shows "invalid channel number". The same thing happened before. When we reported it to you, you fixed it, didn't you?
+Agent: Let me check. The phone number is the one you are calling from, right?
+Customer: Yes, the same one.
+Agent: What is the owner's name?
+Customer: C. R. Munasinghe.
+Agent: The name is Munasinghe, right? So, on your connection, the Peo TV displays,
+Customer: Yes.
+Agent: "Invalid channel number". And this happened before as well.
+Customer: "Channel number".
+Agent: Is it like that for every channel?
+Customer: Yes, no matter what you press for every channel, that appears.
+Agent: It appears. So, first it turns on as Peo TV, and then that message comes, right?
+Customer: Yes. Right now I am watching through the antenna. I connected the antenna.
+Agent: Because when I check here, there is no issue. Didn't you check the connection again after that?
+Customer: No, I checked several times. It shows "invalid number". So this time I connected the antenna.
+Agent: I will place a request. Please check again, reconnect and see if the connection is alright. I will put a request for this issue. The router, setup box, and Peo TV box, they turn off and on, they get power and turn on, right?
+Customer: Alright.
+Customer: Yes. Alright. Okay, thank you.
+Agent: I will submit a complaint to the technical department to check this then.
