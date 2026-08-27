@@ -1,0 +1,28 @@
+Agent: Hello. I am Chamani. Can I help you?
+Customer: Hello. I am calling from Mattakkuliya. I have a Peo TV, miss. I gave a letter to Punchi Borella to change the location.
+Agent: Yes.
+Customer: There is no request yet. We are moving today. Can we get it moved to the house today?
+Agent: Please tell me the number, sir.
+Customer: 25 25 418.
+Agent: 011
+Customer: 25 25
+Agent: Yes.
+Customer: 418.
+Agent: Under what name is it listed, sir?
+Customer: A Kavindra.
+Agent: Right. I will check, sir. Please stay on the line, sir.
+Customer: Right.
+Agent: Thank you for waiting.
+Customer: Yes.
+Agent: Yes. So this is currently at Colombo 15, right? From there, where are you relocating...
+Customer: Yes. To Colombo 15 itself.
+Agent: Right. You have to give the request to the branch for that, sir. The branch listed here is Maradana. Or else, you said you gave it to Punchi Borella.
+Customer: Yes, I gave it to Punchi Borella. Yes.
+Agent: Yes. When did you hand this over?
+Customer: Monday.
+Agent: Right. However, they have not entered a request into the system yet. That is done by the branch, sir.
+Customer: Yes. Will I not be able to get it installed today?
+Agent: You will have to speak with the branch about that, sir. If they had put a request in the system, we could have directly sent a reminder from here. They have not mentioned anything in the system regarding a relocation.
+Customer: Yes, but I gave the letter.
+Agent: That is why you should speak to the branch, sir. You have called the call center. If they had put the request in the system, we could see the details.
+Customer: Right.

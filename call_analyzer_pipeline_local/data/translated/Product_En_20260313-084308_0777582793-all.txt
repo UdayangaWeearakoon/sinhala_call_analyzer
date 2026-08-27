@@ -1,0 +1,21 @@
+Agent: Hello, I am Sanduni. Can I help you?
+Customer: Hello, I am calling from Sapphires King. Our phone number is 091 22...
+Agent: Please state the number. Zero...
+Customer: 91 22...
+Agent: Yes.
+Customer: 10 850.
+Agent: What is the owner's name?
+Customer: P C Chathuranga.
+Agent: Right, what is the issue with this?
+Customer: Yesterday I placed a request to change this fiber connection from the previous Unlimited Flash 10 package to the Unlimited Home package. I wanted to check if this has been changed.
+Agent: It is currently on Unlimited Flash 10. Did you request the Unlimited Home package, sir?
+Customer: Yes, to Home.
+Agent: If you are changing from Unlimited Flash 10 to Unlimited Home, sir, that happens on your billing date. That means the package change is scheduled for the first, sir. The request has been placed, sir.
+Customer: No, I requested and gave a letter to the Ambalangoda SLT to activate it immediately. They said from yesterday midnight...
+Agent: Usually, that is a package downgrade, sir. It also moves to advance billing. Then the current charge and the 5,900 for the other will both be added to this bill. Because of that, they have scheduled it for the next billing date. Downgrades are always scheduled for the next billing date, sir. The request has been placed to change the package on the first of next month, sir.
+Customer: No, I made a special request saying it is needed immediately.
+Agent: Let me check, please stay on the line, sir.
+Customer: Right.
+Agent: Thank you for waiting, sir. We will inform the person who placed the request yesterday to get this done today, sir. They placed the request to change the package yesterday itself. However, it failed in our system due to an issue. I informed the supervisor from here. Through that, your Ambalangoda branch was informed to get it done today, sir.
+Customer: Right, okay.
+Agent: Please stay on the line to rate the service provided. Thank you for calling Sri Lanka Telecom Mobitel. Have a good day.

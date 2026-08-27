@@ -1,0 +1,53 @@
+Agent: Sri Lanka Telecom, I am Priyanka. Can I help you?
+Customer: Miss, I gave a letter to move my connection to another place.
+Agent: What is it, madam?
+Customer: You mean, was the location changed? Did the residential address change?
+Customer: I need to get it done. I gave a letter, miss. It has been about three days. I need this urgently now. They said a week. Tell me how many days have passed now. Still not done properly.
+Agent: That means, when did you give the letter, madam?
+Customer: I do not remember the exact date I gave the letter. After about ten days, there was a funeral. I came back from the funeral yesterday. Even when I came, they had not come, nothing.
+Agent: Right. Please tell me your phone number to change it, madam. What is the phone number required for this location change?
+Customer: 076
+Agent: No madam, not this one. What is the SLT telephone number?
+Customer: 025
+Agent: 025
+Customer: 21 21
+Agent: Right.
+Customer: 132
+Agent: Please state the telephone owner's name.
+Customer: W D C S Weerasinghe
+Agent: Thank you, please stay on the line.
+Agent: Thank you for waiting, madam. Please tell me the address of the location you used.
+Customer: It is at the same place. We only had two rooms built like this. Now we built the living room. Now it needs to be moved to the living room. But they said a letter is needed. After that, I went.
+Agent: Yes. They say a letter must be given. That means even for internal wiring, madam, we need to give a letter. Right, we have the Empower letter address here, is that where the technicians should go?
+Customer: Yes.
+Agent: Right. Then they must have told you how many days it will take for this task, madam? Did they promise anything?
+Customer: They said three days.
+Agent: Yes, they said it takes three days. Right, let's see madam, I am checking the work order.
+Customer: Okay.
+Agent: Thank you for waiting, madam. The order was submitted on the 6th of this month. Let's see, I am opening it now.
+Agent: Right, then it is the 14th, right? They promised to come in two or three days. I will directly forward a complaint regarding this to the officer who placed the order. Please stay on the line.
+Customer: Yes, [unintelligible]
+Agent: Please give me a mobile phone number for you, madam. Shall I take the number you are calling from?
+Customer: Yes, 076 522 75 23.
+Customer: Why, what happened?
+Agent: Please stay on the call, madam, stay on the line.
+Customer: Right.
+Customer: Oh.
+Customer: Wait another minute. If you can hear me, I will go.
+Customer: Now this is finished.
+Agent: Stay on the line, madam, please stay on the call.
+Customer: Yes.
+Agent: Stay on the line, madam, do not disconnect the call.
+Customer: Okay.
+Agent: Right madam, regarding that... wait, your mobile phone number...
+Agent: Right. The complaint has been forwarded, madam. I asked the officer at the Anuradhapura office who placed the work order to check and attend to this as soon as possible.
+Customer: Yes.
+Agent: I have SMSed the reference number to you, madam. Do you need to know anything else, madam?
+Customer: No miss, no. Thank you. Thank you very much. I paid all the money too, madam, because it is very urgent, that is why I came.
+Agent: That is true, madam. What I mean is, if they were going to be late, they should have informed you that it would take this many days. Because they have informed the contact center that it usually takes within two weeks. But that is for a distant location. Here, you need something done inside your house, madam. I made a reminder about that. That you need the internal wiring done.
+Customer: Yes, my shop is big. I have installed cameras for it. I need data for those working cameras.
+Agent: I will mention that here, madam. That means this impacts the security side as well. Stay on the line, madam, please stay on the call.
+Customer: Yes.
+Agent: Right, madam. I have forwarded your feedback to the complaint again. Do you need to know anything else, madam?
+Customer: No miss, no. Thank you. Thank you very much.
+Agent: Please stay on the line to rate the service I provided. Thank you for calling SLT Mobitel. Have a good day.
