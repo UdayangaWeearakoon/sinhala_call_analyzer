@@ -1,0 +1,17 @@
+Agent: Hello, I am Shinthika. How can I assist you?
+Customer: Hello, I am calling from Balagolla, Kandy.
+Agent: Okay.
+Customer: I need to get the number of a business. It is a tile shop called Maha Tiles.
+Agent: Okay. Is there a specific branch or location, sir?
+Agent: Which branch did you mean?
+Customer: Are you asking for a location? Where it is located?
+Customer: It is located in Balagolla. When you pass Kundasale and go towards Digana, it is in the Balagolla area.
+Agent: Yes. Is it Maha Tiles or Maha Lekam Tile Factory?
+Customer: The name is Maha Tiles.
+Agent: Maha Tile? M-A-H-A-T-I-L-E.
+Customer: Yes, Maha Tile.
+Agent: I will check, sir. Please hold the line.
+Customer: Alright.
+Agent: Sir, we do not have a listing for Maha Tiles. There is one in Thambarawila, Waikkal. We do have Maha Lekam Tile Factory. We do not have a listing for Maha Tiles, sir, I apologize.
+Customer: Okay. Thank you very much.
+Agent: Do you need to know anything else, sir?
