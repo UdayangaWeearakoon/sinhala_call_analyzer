@@ -1,0 +1,23 @@
+Agent: Hello, Sri Lanka Telecom. How may I assist you?
+Customer: Hello sir, I am calling from Gampaha. Our phone was disconnected, and I just paid the bill.
+Agent: Yes.
+Customer: The line is not active yet. Please look into it.
+Agent: Can you tell me the telephone number, sir?
+Customer: 033
+Agent: Okay.
+Customer: 22
+Agent: Okay.
+Customer: 65257
+Agent: Please tell me the name on the ID card as well, sir.
+Customer: A. S. K. Karunarathna.
+Agent: At what time did you make the payment, sir?
+Customer: About 10 minutes ago.
+Agent: No, how much was the payment, sir? The amount?
+Customer: 6,500.
+Agent: 6,500. I will check the connection, sir. Please hold on for a minute.
+Customer: Brother, are you there?
+Agent: I am checking the account details. Please hold on for another minute, sir.
+Customer: Alright.
+Agent: Sir, I checked the details. The issue is that the line did not auto-activate in the system. I have processed the activation from here. In about ten minutes, completely turn off and turn on the router and the Peo TV unit, and you will be able to use the connection.
+Customer: Alright.
+Agent: Thank you for calling Sri Lanka Telecom, sir. Have a good day. Please rate the service provided.
