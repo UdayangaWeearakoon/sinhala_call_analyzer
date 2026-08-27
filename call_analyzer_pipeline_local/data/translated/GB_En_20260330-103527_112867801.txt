@@ -1,0 +1,25 @@
+Agent: ආයුබෝවන්, මම කල්පනී, how may I help you?
+Customer: Yes, Miss, ආයුබෝවන්. Miss, Miss, I just, sorry. I want to what is, check whether my line is working normally.
+Agent: Okay, may I know your number, sir? Is it calling number?
+Customer: 0 1 1 2 8 6 7 8 0 1
+Agent: Okay, may I know the connection owner's name, sir?
+Customer: Yeah, it should be, I don't know the initial, Desmond Perera, or W. D. I. Perera, it should be.
+Agent: Okay, how may I help you, sir?
+Customer: Hello?
+Agent: How may I help you, sir?
+Customer: Yeah, I want to check whether my line is okay because I just found somewhat it was, I couldn't send. Yeah, it has the internet got a bit delayed in opening. So, that's why, yeah.
+Agent: Uh, that's the reason for your G- data-time allocate GB is over, sir. 6 GB allocated, that GB is over.
+Customer: Ah, I see. Yeah, so that, Miss, can I if I tell you to what is, uh add-on, you can add on or what is it?
+Agent: Yeah, you can get extra GB, sir. Uh, standard plan, extra, yeah. Just add two- 2 GB on, Miss.
+Customer: Yeah.
+Agent: Uh, you want a 2 GB?
+Customer: Hello?
+Agent: Are you want 2 GB, sir?
+Customer: Yeah, 2 GB, that's I'm a very low user.
+Agent: Can you verify the owner's NIC number or address, sir?
+Customer: Yeah, my NIC number is 4 5
+Agent: Okay.
+Customer: 3 3 2 1 8 2 7 V
+Agent: Okay, I already activated extra 2 GB. You can use that GB, sir.
+Customer: Yeah, okay, Miss. Thank you very much.
+Agent: Okay, thank you for calling SLT-Mobitel. Have a nice day, pleas hold on.
