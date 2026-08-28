@@ -102,5 +102,6 @@ def get_call_analytics(
 ) -> dict[str, Any]:
     conn = get_connection()
 
-
+try:
+        cursor = conn.cursor(dictionary=True)
     
