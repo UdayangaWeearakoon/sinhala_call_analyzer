@@ -113,5 +113,7 @@ def get_call_analytics(
             "WHERE category IS NOT NULL GROUP BY category"
         )
 
+        category_counts = {row["category"]: row["cnt"] for row in cursor.fetchall()}
+
 
     
