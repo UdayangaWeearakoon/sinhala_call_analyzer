@@ -110,7 +110,7 @@ def get_call_analytics(
 
         cursor.execute(
             "SELECT category, COUNT(*) AS cnt FROM transcripts "
-            
+            "WHERE category IS NOT NULL GROUP BY category"
         )
 
 
