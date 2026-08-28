@@ -104,6 +104,8 @@ def get_call_analytics(
     try:
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT COUNT(*) AS total, AVG(confidence) AS avg_conf FROM transcripts")
+        agg = cursor.fetchone()
+        total_calls = agg["total"]
 
 
     
