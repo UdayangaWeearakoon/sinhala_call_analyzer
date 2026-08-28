@@ -106,6 +106,7 @@ def get_call_analytics(
         cursor.execute("SELECT COUNT(*) AS total, AVG(confidence) AS avg_conf FROM transcripts")
         agg = cursor.fetchone()
         total_calls = agg["total"]
+        avg_confidence = round(agg["avg_conf"], 2) if agg.get("avg_conf") is not None else None
 
 
     
