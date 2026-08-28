@@ -108,5 +108,10 @@ def get_call_analytics(
         total_calls = agg["total"]
         avg_confidence = round(agg["avg_conf"], 2) if agg.get("avg_conf") is not None else None
 
+        cursor.execute(
+            "SELECT category, COUNT(*) AS cnt FROM transcripts "
+            
+        )
+
 
     
