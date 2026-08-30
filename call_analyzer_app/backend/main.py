@@ -101,6 +101,19 @@ def get_call_analytics(
     per_page: int = Query(20, ge=1, le=100, description="Items per page"),
 ) -> dict[str, Any]:
     conn = get_connection()
+    try:
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT COUNT(*) AS total, AVG(confidence) AS avg_conf FROM transcripts")
+        agg = cursor.fetchone()
+        total_calls = agg["total"]
+        avg_confidence = round(agg["avg_conf"], 2) if agg.get("avg_conf") is not None else None
+
+        cursor.execute(
+            "SELECT category, COUNT(*) AS cnt FROM transcripts "
+            "WHERE category IS NOT NULL GROUP BY category"
+        )
+
+        category_counts = {row["category"]: row["cnt"] for row in cursor.fetchall()}
 
 
     
